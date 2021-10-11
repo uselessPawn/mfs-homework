@@ -28,12 +28,15 @@ Alt + ←/→  :返回/前进 Go back / forward
 
 插件卸载
 1. 点击vscode左边的扩展工具。如图
+
 ![](https://work.mafengshe.com/static/upload/article/pic1633874790271.jpg)
 
 2. 在已启动的扩展插件中点击要卸载的插件，然后点击右边的卸载按钮。如图
+
 ![](https://work.mafengshe.com/static/upload/article/pic1633874851841.jpg)
 
 3. 插件卸载成功后，右边的卸载按钮会变为绿色的安装按钮。如图
+
 ![](https://work.mafengshe.com/static/upload/article/pic1633874856692.jpg)
 
 #### VSCode 中使用 Git
