@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/infoGet" method="get">
+        <div class="username">
+            <label for="">姓名：</label>
+            <input type="text" name="username" placeholder="用户名" />
+        </div>
+        <div class="password">
+            <label for="">密码：</label>
+            <input type="password">
+        </div>
+        <div class="gender">
+            <label for="">性别：</label>
+            <input type="radio" name="gender" value="male">男
+            <input type="radio" name="gender" value="female">女
+        </div>
+        <div class="city">
+            <label for="">城市：</label>
+            <select name="city">
+                <option value="beijing">北京</option>
+                <option value="tianjin">天津</option>
+                <option value="shanghai">上海</option>
+                <option value="chongqing">重庆</option>
+            </select>
+        </div>
+        <div class="expertise">
+            <label for="">擅长技术</label>
+            <input type="checkbox" name="expertise" value="html">HTML
+            <input type="checkbox" name="expertise" value="css">CSS
+            <input type="checkbox" name="expertise" value="javascript">JavaScript
+            <input type="checkbox" name="expertise" value="java">Java
+        </div>
+        <div class="selfIntro">
+            <label for="">自我介绍：</label>
+            <br />
+            <textarea name="selfIntro" cols="30" rows="10"></textarea>
+        </div>
+        <div class="cv">
+            <label for="">上传简历:</label>
+            <input type="file" name="cv">
+        </div>
+        <div class="bts">
+            <button type="submit">提交</button>
+            <button type="reset">重置</button>
+        </div>
+    </form>
+</body>
+
+</html>
