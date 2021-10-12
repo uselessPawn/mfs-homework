@@ -10,37 +10,57 @@
 
 <body>
     <h2>表单一</h2>
-    <form action="" method="post">
-        <input type="button" value="">
-        <input type="checkbox" name="" id="">
-        <input type="color" name="" id="">
-        <input type="date" name="" id="">
-        <input type="datetime" name="" id="">
-        <input type="datetime-local" name="" id="">
-        <input type="email" name="" id="">
-        <input type="file" name="" id="">
-        <input type="hidden" name="">
-        <input type="image" src="" alt="">
-        <input type="month" name="" id="">
-        <input type="number" name="" id="">
-        <input type="password" name="" id="">
-        <input type="radio" name="" id="">
-        <input type="range" name="" id="">
-        <input type="reset" value="">
-        <input type="search" name="" id="">
-        <input type="submit" value="">
-        <input type="text" name="" id="">
-        <input type="time" name="" id="">
-        <input type="url" name="" id="">
-        <input type="week" name="" id="">
+    <form action="./post" method="post">
+        多选框：<input type="checkbox" name="" id=""><br>
+        选色器：<input type="color" name="" id=""><br>
+        日期（日）：<input type="date" name="" id=""><br>
+        不被浏览器支持的时间：<input type="datetime" name="" id=""><br>
+        日期（当前时间）：<input type="datetime-local" name="" id=""><br>
+        邮箱：<input type="email" name="" id=""><br>
+        文件上传：<input type="file" name="" id=""><br>
+        <input type="hidden" name=""><br>
+        定义图像形式的提交按钮：<input type="image" src="" alt=""><br>
+        日期（月份）：<input type="month" name="" id=""><br>
+        数字：<input type="number" name="" id=""><br>
+        密码：<input type="password" name="" id=""><br>
+        单选框：<input type="radio" name="" id=""><br>
+        范围选择：<input type="range" name="" id=""><br>
+        搜索：<input type="search" name="" id=""><br>
+        文本：<input type="text" name="" id=""><br>
+        时间（分：秒）：<input type="time" name="" id=""><br>
+        url：<input type="url" name="" id=""><br>
+        日期（周）：<input type="week" name="" id=""><br>
+        提交按钮：<input type="submit" value="提交"><br>
+        按钮：<input type="button" value="按钮"><br>
+        重置按钮：<input type="reset" value="重置"><br>
+
     </form>
 
     <hr>
 
     <h2>表单二</h2>
-    <form action="">
+    <form action="InfoGet" method="get">
+        <div>
+            邮箱：<input type="email" name="email" required>
+        </div>
+        <div>
+            0-100的偶数：<input type="number" name="number" min="0" max="100" step="2">
+        </div>
+        <div>
+            城市：<input list="city" name="city">
+            <datalist id="city">
+                <option value="北京">
+                <option value="上海">
+                <option value="广州">
+                <option value="深圳">
+            </datalist>
+        </div>
 
+        <div>
+            <button type="submit">提交</button>
+        </div>
     </form>
+
 
 </body>
 
