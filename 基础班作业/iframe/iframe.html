@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        .left {
+            float: left;
+            width: 100px;
+        }
+
+        .left a {
+            display: block
+        }
+
+        .right {
+            float: left;
+            width: calc(100% - 102px);
+            height: 100vh
+        }
+    </style>
+</head>
+
+<body>
+    <div class="left">
+        <a href="http://www.sina.com.cn" target="iframe1">新浪</a>
+        <a href="https://www.mafengshe.com" target="iframe1">码蜂社</a>
+    </div>
+    <iframe name="iframe1" src="http://www.sina.com.cn" class="right"></iframe>
+</body>
+
+</html>
