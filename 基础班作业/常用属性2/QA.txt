@@ -1,0 +1,44 @@
+问答题：
+1. font 属性可以缩写哪些子属性？它们的参数各是什么，有何含义？
+可以缩写font-weight, font-size, font-family, line-height
+weight字重，常用的是regular和粗体bold
+font-size：字体大小，用像素做单位时就是按数值大小方法，用em做单位时就是根据继承的父类字体大小生效。
+font-famile：字体类型，一般会指定多个，前面的先生效，除非前面的字体类型出错，后面的类型才会接替生效。
+line-height:行高，一般用em为单位，比如1.5em就是font-size的1.5倍
+
+
+2. 如何实现单行文本的垂直居中？
+只要使得line-height和height的值相同。
+
+
+
+3. 如何实现文本的水平居中？
+设置text-align: center即可
+
+4. 什么是 iconfont？使用它有什么优势？如何使用 iconfont？
+iconfont是阿里巴巴的矢量图标库。
+优势：1、方便调节大小 2、减少流量消耗 3、不同分辨率可以使用同一图标 4、视网膜屏下依旧清晰
+使用方法：
+从iconfont的网址下载想要的代码和相应的文件，再将相应的.css文件导入，按要求声明i标签和相应的类
+
+
+
+5. 文本相关的属性哪些是可以继承的？
+字体系列：
+font-weight,font-size,font-famile,font-style
+
+文本系列属性：
+text-indent, text-align, line-height, word-spacing, letter-spacing, text-transforn，color
+
+
+
+6. 什么是 CSS 边框？如何使用边框？
+CSS边框是围绕元素内容和内边距的一条或多条线。
+可以缩写成border: [border-width] [border-color] [border-style]
+
+代码题：
+1. 请使用 border 实现四个方向的直角三角形
+
+2. 请使用 border 属性画出一个正三角形，方向不限
+
+3. 请使用 border 属性画出一个直角梯形，方向不限
