@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dice</title>
+
+    <style>
+        .container1 {
+            display: flex;
+            width: 1100px;
+            height: 700px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .dice {
+            display: flex;
+            background-color: gray;
+            width: 300px;
+            height: 300px;
+        }
+
+        .column {
+            width: 100px;
+            height: 300px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .point {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+        }
+
+        /* 一点的骰子 */
+        .one {
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 两点的骰子 */
+        .two {
+            justify-content: space-between;
+        }
+
+        .two .point:nth-child(2) {
+            align-self: flex-end;
+        }
+
+        /* 三点的骰子 */
+        .three .point:nth-child(2) {
+            align-self: center;
+        }
+
+        .three .point:nth-child(3) {
+            align-self: flex-end;
+        }
+
+        /* 四点的骰子 */
+        .four {
+            justify-content: space-between;
+        }
+        .four .column {
+            align-content: space-between;
+        }
+
+        /* 五点的骰子 */
+        .five .column:nth-child(1),
+        .five .column:nth-child(3) {
+            align-content: space-between;
+        }
+
+        .five .column:nth-child(2) {
+            align-items: center;
+        }
+
+         /* 六点的骰子 */
+        .six {
+            justify-content: space-between;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container1">
+        <div class="dice one">
+            <div class="point"></div>
+        </div>
+
+        <div class="dice two">
+            <div class="point"></div>
+            <div class="point"></div>
+
+        </div>
+
+        <div class="dice three">
+            <div class="point"></div>
+            <div class="point"></div>
+            <div class="point"></div>
+
+        </div>
+
+        <div class="dice four">
+            <div class="column">
+                <div class="point"></div>
+                <div class="point"></div>
+            </div>
+
+            <div class="column">
+                <div class="point"></div>
+                <div class="point"></div>
+            </div>
+        </div>
+
+        <div class="dice five">
+            <div class="column">
+                <div class="point"></div>
+                <div class="point"></div>
+            </div>
+            <div class="column">
+                <div class="point"></div>
+            </div>
+            <div class="column">
+                <div class="point"></div>
+                <div class="point"></div>
+            </div>
+
+        </div>
+
+        <div class="dice six">
+            <div class="column">
+                <div class="point"></div>
+                <div class="point"></div>
+                <div class="point"></div>
+            </div>
+
+            <div class="column">
+                <div class="point"></div>
+                <div class="point"></div>
+                <div class="point"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
