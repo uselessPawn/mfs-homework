@@ -1,0 +1,61 @@
+问答题：
+1. 有哪些方法可以创建字符串？我们最常用哪一种方法？
+三种方法
+1. str = new String("xxx");
+2. str = String("xxx");
+3. str = "xxx"
+
+最常用第三种。
+
+2. 如果需要将字符串折行，可以使用什么办法？
+方法一：如果长字符串必须分成多行，可以在每一行的尾部使用反斜杠。
+方法二：用连接运算符（+）连接多个单行字符串，用来模拟多行字符串。 
+方法三：用模板字符串` `
+
+3. 如果使用双引号声明字符串，而字符串中又存在 " 这时该怎么办？
+用转义字符反斜杠 \
+
+
+4. split() 函数有什么用？它的返回值是什么？
+字符串分割。
+返回值是数组。
+
+5. 如何查询字符串中的子串所在位置？
+用indexOf方法。
+
+
+6. slice()，substring()，substr() 函数用法有什么不同？
+1. 
+substr输入的两个参数，第一个是起始位置，第二个是截取长度。substr和slice输入的两个参数，第一个是起始位置，第二个是结束位置（不包括）。
+
+2.
+substring是以两个参数中较小一个作为起始位置，较大的参数作为结束位置。
+
+3. 
+当接收的参数是负数时，slice会将它字符串的长度与对应的负数相加，结果作为参数
+substr则仅仅是将第一个参数与字符串长度相加后的结果作为第一个参数；substring则干脆将负参数都直接转换为0。
+
+
+
+7. 字符串是如何比较的？一个字符串比另外一个大表示什么？
+比较两个字符串，比较规则是按照字母表顺序。
+表示在字母表里排序靠前。
+
+
+代码题：
+1. 请实现：输入文件名，返回文件后缀名
+   function getSuffix(file) {
+            var suffix = file.split('.')[1]
+            return suffix
+        }
+
+    console.log(getSuffix("index.html"))
+
+2. 请实现：输入任意英文语句，将单词首字母大写。如输入：I miss you，返回I Miss You
+
+   function first2UpperCase(sen) {
+            return sen.split(' ').map((cur) => {
+                return cur[0].toUpperCase() + cur.slice(1)
+            }).join(' ');
+        }
+    console.log(first2UpperCase('I miss you'))

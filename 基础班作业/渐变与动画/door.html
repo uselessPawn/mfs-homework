@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>door</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .frame {
+            height: 200px;
+            width: 150px;
+            border: 20px solid #8b4513;
+            border-bottom: none;
+        }
+
+        .door {
+            height: 100%;
+            width: 100%;
+            background-color: #e9967a;
+        }
+
+        .door-open {
+            transform-origin: 0 0;
+            transform: rotateY(-45deg);
+        }
+
+        .frame-realistic {
+            perspective: 20em;
+        }
+
+        .door-ani {
+            transform-origin: 0 0;
+            animation: doorani 1.3s ease-in-out infinite alternate;
+        }
+
+        @keyframes doorani {
+            from {
+                transform: rotateY(-45deg);
+            }
+
+            to {
+                transform: rotateY(45deg);
+            }
+        }
+
+        .container-realistic {
+            perspective: 20em;
+        }
+
+        .frame-ani {
+            transform: 0 0;
+            animation: frameani 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes frameani {
+            from {
+                transform: rotateY(30deg);
+            }
+            to {
+                transform: rotateY(-30deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container container-realistic">
+        <div class="frame frame-realistic frame-ani">
+            <div class="door door-ani">
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

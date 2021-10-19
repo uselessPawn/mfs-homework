@@ -1,0 +1,112 @@
+1. JavaScript 中有哪些基本类型？
+有6种基本类型。
+数值(number) 
+字符串(string)
+布尔值(boolean)
+对象(object)
+undefined
+null
+
+
+
+2. 如何声明并初始化字符串类型的变量？" 和 ' 声明字符串有什么不同的应用场景？
+var s = "hello";
+
+当字符串本身包含引号的时候，可以使用合理使用单引号或者双引号避开。
+
+
+3. JavaScript 数值类型的变量支持科学计数法表示吗？如果能，如何表示？
+支持。
+100  : 1e2
+0.01 : 1e-2
+
+
+4. Infinity 是什么类型？什么时候会得到 Infinity？
+number类型。
+JS的number类型数据有范围限制，如果超出范围，就用Infinity表示。
+
+5. NaN 是什么类型？它表示什么意思？
+是数值类型。
+表示not a number的意思
+
+6. JavaScript 中布尔（boolean）类型的变量有哪两个合法值？分别代表什么意思？
+true和flase。分别表示真和假的意思。
+
+7. JavaScript 中如何声明对象（狭义的对象）？
+对象由花括号分隔。在括号内部，对象的属性以名称和值对的形式 (name : value) 来定义。
+如 var a = {name:"Jason"}
+
+
+8. 原始类型可以看做是广义的对象吗？可以调用 toString() 方法吗？
+可以。
+可以
+
+
+9. 新建数组有几种方法？最常用的是哪种方法？
+1. 使用数组对象的构造函数Array()，如 new Array() 新建数组, 如：var mycars=new Array(3)
+2. 使用简便方法，如 var arr = [1,2,3];
+
+最常用的是第二种。
+
+
+10. 任何数据类型如何转化为字符串？
+使用toString方法。
+
+
+11. 最常用的最简单的将任意类型转化为 Number 的方法是什么？
+parseInt方法
+
+
+12. typeof 可以查看哪些类型变量的类型，可以区分 Array ，Function 和 Object 类型吗？如果不能，我们该使用什么办法区分？
+可以区分Function和object
+不能区别Array和Objec
+Array可以用isArray方法判断
+
+
+13. null 和 undefined 有什么区别？
+null表示的没有内容，可以理解成一个占位符，告诉其他人这里没东西。
+undefined表示这个变量没被定义，是未知的意思。
+
+代码题：
+1. 请将下面变量转化为 Number，并回答其对应的 Number 值是多少
+"1.0"
+"2"
+"str"
+true
+[]
+[1, 2, 3]
+{}
+{a:1}
+function(){}
+
+"1.0"  -> 1
+"2"  -> 2
+"str" -> NaN
+true -> NaN
+[] -> NaN
+[1, 2, 3] -> NaN
+{} -> NaN
+{a:1} -> NaN
+function(){} -> NaN
+
+
+2. 请将下面变量转化为 Boolean，并回答其对应的 Number 值是什么
+
+"1" -> true
+"str" -> true
+1 -> 1
+0 -> false
+[] -> true
+[1, 2, 3] -> true
+{} -> true
+{a:1} -> true
+function(){} -> true
+
+3. 请初始化一个变量 obj，它拥有以下几个字段
+
+字段	值
+a	1
+b	“2”
+c	true
+
+var obj = {a:1,b:"2",c:true}
