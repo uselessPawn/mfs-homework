@@ -1,0 +1,40 @@
+问答题 
+1. 有哪些水平居中的方法？请分别回答当元素为：行内元素，定宽块状元素时的方法和通用方法
+
+行内元素：在父元素设置text-align: center即可
+定宽块状元素：元素自身设置margin: 0 auto即可
+通用方法：将父元素设置为flex布局，再用justify:center 居中即可
+
+
+2. 有哪些垂直居中的方法？
+如果只有单行文本，可以将子元素的line-height和父元素的行高设置能
+如果是父元素一定，子元素为多行内联文本：设置父元素的display:table-cell或inline-block，再设置verticle-align: middle。
+如果是块状元素：子绝父相，再将子元素的top,right,bottom,left设为0，再设置：margin：auto 0;即可。
+
+
+通用方案：
+将父元素设置成flex布局，如果是多个子元素排成多行，在父元素设置align-center为center，如果是单行，那么将元素设置成align-items为center。
+
+
+3. 单列布局是什么？
+单列布局是所有内容从上到下依次排列在一列中。特征是定宽、水平居中。
+常见有两种：
+一种是header,content,footer宽度都相同。一般不会占满屏幕最宽宽度，但当浏览器宽度缩小低于其最大宽度等，宽度会自适应。
+另一种是header,footer宽度相同，content以及header,footer中的内容不会占满浏览器内容。
+
+
+4. css 中允许负 margin 吗？什么时候需要使用负 margin？
+允许。
+
+
+
+代码题
+1. 请使用3中方法使 .item 完全居中（水平且垂直居中），文档结构如下
+<div class="container">
+ <div class="item">
+ this is item
+ </div>
+</div>
+2. 请使用传统方法实现圣杯布局
+
+3. 请使用 flex 布局实现圣杯布局
