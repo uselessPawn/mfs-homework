@@ -1,0 +1,40 @@
+问答题：
+1. 创建对象有几种方式？最常用的是那种？
+构造函数法：person=new Object();
+字面量法：person={firstname:"John",lastname:"Doe",age:50,eyecolor:"blue"};
+
+
+2. 如何使用对象构造器？对象构造器和函数有什么关系？
+在一个函数前使用new关键字就算使用了对象构造器。
+对象构造器和函数的区别只在于有没有在函数前使用New。有就是对象构造器，反之不是。
+
+
+3. 如何遍历所有的对象属性？
+方法一： 使用for in
+var person={fname:"Bill",lname:"Gates",age:56};
+
+for (x in person){
+  console.log(x, person[x])
+}
+
+方法二:使用Object的getOwnPropertyNames方法或keys方法拿到键名，再用键名去遍历
+
+var person={fname:"Bill",lname:"Gates",age:56};
+var keys = Object.getOwnPropertyNames(person) // ["fname", "lname", "age"]
+for(let i=0;i<keys.length;i++) {
+    consolo.log(keys[i], person[keys[i]])
+}
+
+
+代码题：
+1. 对于以下对象，请实现输出对象中所有字段名称和其对应的值
+```
+var person={fname:"Bill",lname:"Gates",age:56};
+```
+
+```
+var person={fname:"Bill",lname:"Gates",age:56};
+for( x in person) {
+    console.log(x, person[x])
+}
+```

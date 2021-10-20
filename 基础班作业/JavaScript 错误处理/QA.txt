@@ -1,0 +1,88 @@
+问答题：
+1. 什么是错误处理？为什么要错误处理？
+当 JavaScript 引擎执行 JavaScript 代码时，会发生各种错误。而错误处理就是JS引擎处理这些问题的机制。
+
+2. 常见的错误有哪些？
+语法错误，通常是程序员造成的编码错误或错别字。
+拼写错误或语言中缺少的功能（可能由于浏览器差异）。
+来自服务器或用户的错误输出而导致的错误。
+其他不可预知的因素。
+
+3. 能用 if 语句替代错误处理吗？如果能，请给出实例代码，如果不能，请说明原因（开放题）
+可以。比如一个函数的输入值要求是数组，可以用if语句检测输入值。不是数组就用console.err报错
+
+4. 如何抛出一个错误？
+throw new Error(“错误”)
+
+5. 以下代码可以捕获异常吗？为什么？
+```
+function a(){
+ throw new Error("An error")
+}
+function b(){
+ a();
+}
+try{
+ b()
+}catch(err){
+ console.log(err)
+}
+```
+可以捕获异常。因为b调用了a，而a函数中会抛出异常。
+
+6. finally 子句有什么用？
+不管try语句是否抛出了异常，finally里的逻辑总是会执行
+因而可以用来执行无论出不出错都会执行的语句。
+ 
+7. JavaScript 中 throw 可以抛出非 Error 类型的异常吗？请动手试试
+可以抛出字符串、数字、逻辑值或对象。
+  try {
+            throw "Too big."
+        } catch (err) {
+            console.log(err)
+        }
+
+8. try catch 语句可以嵌套吗？ 如何嵌套？
+可以嵌套。
+try {
+            try {
+
+            } catch (err) {
+                throw new Error(err)
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+
+
+
+代码题：
+1. 请构造一段会产生异常的代码（注意：不是一定会产生，是有一定概率产生异常），然后使用异常处理机制处理它
+try {
+    addArr(a,b,c)
+} catch(err) {
+    console.log(err)
+}
+
+function addArr(arr,a,b) {
+    return arr[a]+arr[b]
+}
+
+
+2. 以下代码能不能正常捕获异常，如果不能请分析原因并修改代码使其可以正常捕获异常
+
+```
+function asyncTask(){
+ setTimeout(function(){
+   throw new Error("An error")
+ },1000)
+}
+
+try{
+ asyncTask()
+} catch(err){
+ console.log(err)
+}
+```
+可以正常捕获。
