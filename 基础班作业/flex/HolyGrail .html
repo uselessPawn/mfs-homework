@@ -18,6 +18,7 @@
         }
 
         .header {
+            order: -1;
             width: 100%;
             background-color: lightblue;
         }
@@ -29,9 +30,11 @@
         }
 
         .aside-left {
+            order: -1;
             width: 200px;
             background-color: lightpink;
         }
+
         .main-content {
             flex-grow: 1;
         }
@@ -50,12 +53,13 @@
 
 <body>
     <div class="container">
-        <div class="header">头部</div>
         <div class="main">
-            <div class="aside-left">侧边栏1固定宽度</div>
             <div class="main-content">主内容栏目自适应宽度</div>
+            <div class="aside-left">侧边栏1固定宽度</div>
             <div class="aside-right">侧边栏2固定宽度</div>
         </div>
+        <div class="header">头部</div>
+
         <div class="footer">底部</div>
     </div>
 

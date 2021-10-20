@@ -65,14 +65,42 @@ justify-content: center;
 align-content: center;
 
 6. 如何使用 flex 实现 列表（从左往右排布，可以多行，最后一行左对齐）
-flex-wrap: wrap;
+如果行数不确定，可以使用足够的空白标签来填补，具体的占位数量是由最多列数的个数决定的。
+但要注意的是，空白元素的宽度正常元素一样，但是不声明高度。这样多余的空白标签就会塌缩，且不影响文档流。
 
+例子：
+```
+        <style>.container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-right: -10px;
+            /* 整个的高度由container里面的list元素撑起来，他们有高度 */
+        }
 
+        .list {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            margin: 15px 10px 0 0;
+        }
 
+        .container>i {
+            width: 100px;
+            /* 没有高度，如果超出也不会新开一行，而且是内联元素 */
+            margin-right: 10px;
+        }
+    </style>
+
+    <div class="container">
+        <div class="list"></div>
+        <i></i>
+    </div>
+```
 一点感想：
 总体感觉：
 
-flex弹性盒布局分两个部分，
+flex弹性盒布局分两个部分，，具体的
 container和item。容器管整体布局。item是进行微调。
 整体布局又以主轴与交叉轴为主要依靠手段。
 
