@@ -1,6 +1,6 @@
 问答题：
 1. 当父元素设置为 display: flex 时，子元素的摆放方式更像 display: block 还是 display: inline？请解释为什么。
-更像是display: block，因为子元素可以设置宽高并且可以让多个子元素排在一行。
+更像是display: inline，因为子元素可以设置宽高并且可以让多个子元素排在一行。
 
 
 2. flexbox 有哪两个轴？他们的方向可以改变吗？如果可以改变，通过设置什么属性可以改变？
