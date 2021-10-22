@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+</head>
+
+<body>
+    <ul id="list">
+    </ul>
+
+    <script>
+        var ul = document.getElementById("list");
+        var li = document.createElement("li")
+        li.innerHTML = 1;
+        ul.appendChild(li)
+        li = document.createElement("li")
+        li.innerHTML = 2
+        ul.appendChild(li)
+        console.log(ul)
+    </script>
+
+</body>
+
+</html>

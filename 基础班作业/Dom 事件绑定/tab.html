@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAB</title>
+
+    <style>
+        .tab {
+            width: 200px;
+            height: 200px;
+        }
+
+        .header {
+            height: 100px;
+        }
+
+        .header .tab-item {
+            float: left;
+            width: 100px;
+            height: 100px;
+        }
+
+        .header .tab-item:nth-child(1) {
+            background-color: lightblue;
+        }
+
+        .header .tab-item:nth-child(2) {
+            background-color: lightcyan;
+        }
+
+        [id*=tab-content-] {
+            height: 100px;
+
+            background-color: lightsalmon;
+        }
+
+        #tab-content-2 {
+            display: none;
+            background-color: lightyellow;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="tab">
+        <header class="header">
+            <div class="tab-item" id="tab1">tab1</div>
+            <div class="tab-item" id="tab2">tab2</div>
+        </header>
+        <section id="tab-content-1">tab1 内容</section>
+        <section id="tab-content-2">tab2 内容</section>
+    </div>
+
+    <script>
+        let tab1 = document.getElementById("tab1")
+        let tab2 = document.getElementById("tab2")
+
+        tab1.addEventListener("click",tab1Handel)
+        tab2.addEventListener("click",tab2Handel)
+
+        function tab1Handel() {
+            let tab1 = document.getElementById("tab-content-1")
+            let tab2 = document.getElementById("tab-content-2")
+            tab1.setAttribute("style", "display:block;")
+            tab2.setAttribute("style", "display:none;")
+        }
+
+        function tab2Handel() {
+            let tab1 = document.getElementById("tab-content-1")
+            let tab2 = document.getElementById("tab-content-2")
+            tab2.setAttribute("style", "display:block;")
+            tab1.setAttribute("style", "display:none;")
+        }
+    </script>
+
+
+
+</body>
+
+</html>

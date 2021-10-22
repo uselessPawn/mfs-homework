@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <title>page</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+        .banner {
+            height: 270px;
+            background: url(https://work.mafengshe.com/static/imgs/banner.jpg);
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-content: flex-start;
+            flex-wrap: wrap;
+            width: 1500px;
+            height: 900px;
+        }
+
+        .session {
+            position: relative;
+            width: 310px;
+            height: 150px;
+            margin-top: 40px;
+            border-radius: 5px;
+            overflow: hidden;
+
+        }
+
+        .session-top {
+            width: 100%;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+
+            height: 105px;
+            background-color: #4cd8e0;
+
+        }
+
+        .session-top .message {
+            display: flex;
+            justify-content: flex-end;
+            color: #eeeeee;
+            height: 16px;
+            font-size: 13px;
+            line-height: 16px;
+        }
+
+        .session-top .face {
+            width: 80px;
+            margin: 0 auto;
+            margin-top: 10px;
+
+        }
+
+        .session-top .face img {
+            height: 60px;
+        }
+
+        .session-bot {
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            color: white;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            background-color: #00474c;
+        }
+
+        .session-corner {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            width: 70px;
+            height: 70px;
+            background-color: #20b6d2;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            line-height: 70px;
+        }
+
+        .place-holder {
+            width: 310px;
+            margin-top: 40px;
+        }
+
+        #pagination {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        #pagination a {
+            font-size: 20px;
+
+            color: #000;
+            margin: 0px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+
+    </div>
+
+    <div class="container" id="sessions">
+        <a href="#" class="session">
+            <div class="session-top">
+                <span class="message">
+                    <span class="iconfont icon-eye-open"></span>
+                    &nbsp;
+                    <div id="watched">123</div>
+                    &nbsp;
+                    <span class="iconfont icon-edit"></span>
+                    &nbsp;
+                    <div id="ans">23</div>
+                </span>
+                <div class="face">
+                    <img src="https://work.mafengshe.com/static/imgs/平静.svg">
+                </div>
+
+            </div>
+            <div class="session-bot">
+                课程名字-1
+            </div>
+            <div class="session-corner">1</div>
+        </a>
+
+
+        <div class="place-holder"></div>
+        <div class="place-holder"></div>
+        <div class="place-holder"></div>
+        <div class="place-holder"></div>
+    </div>
+
+    <nav id="pagination">
+
+    </nav>
+
+
+    <script>
+        let container = document.getElementById("sessions")
+        let sessionCount = 95; //假设从后台请求了100个数据
+        let pageNum = 16; //每页课程数
+        let maxPage = 5; //总页数
+        let pagination = document.getElementById('pagination')
+
+        //初始渲染第一页
+        createPage(1)
+
+        //动态页码
+        for (let i = 1; i <= maxPage; i++) {
+            let page = document.createElement('a');
+            page.setAttribute('href', '#')
+            page.innerHTML = i;
+            page.addEventListener('click', () => {
+                createPage(parseInt(page.innerHTML))
+            })
+            pagination.appendChild(page);
+        }
+
+
+
+        function createPage(page) {
+            createSession(1 + (page - 1) * pageNum, Math.min(page * pageNum, sessionCount));
+        }
+
+        function createSession(start, end) {
+            container.innerHTML = '';
+            for (let i = start; i <= end; i++) {
+                let newSession = document.createElement("a");
+                newSession.setAttribute('class', 'session');
+                newSession.setAttribute('href', '#');
+                newSession.innerHTML =
+                    ' <div class="session-top"><span class="message"><span class="iconfont icon-eye-open"></span>&nbsp;' +
+                    ' <div id="watched">' + i + '</div>&nbsp;<span class="iconfont icon-edit"></span>&nbsp;' +
+                    ' <div id="ans">' + i + '</div></span>' +
+                    '<div class="face"><img src="https://work.mafengshe.com/static/imgs/平静.svg"></div>' +
+                    '</div><div class="session-bot">课程名字-' + i + '</div>' +
+                    '<div class="session-corner">' + i + '</div>'
+                container.appendChild(newSession)
+            }
+        }
+    </script>
+</body>
+
+</html>

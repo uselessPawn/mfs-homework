@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "25042387",
+      "name": "eye-open",
+      "font_class": "eye-open",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "25042390",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    }
+  ]
+}

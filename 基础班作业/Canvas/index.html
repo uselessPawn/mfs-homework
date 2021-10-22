@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #canvas1 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1" width="200px" height="200px"></canvas>
+    <script>
+        var canvas1 = document.getElementById("canvas1")
+        var ctx = canvas1.getContext("2d")
+        ctx.translate(100, 100);
+        setInterval(painClock, 1000)
+
+        function painClock() {
+            //清除上次的时钟
+            ctx.clearRect(-100, -100, 200, 200);
+            // 表盘
+            ctx.beginPath();
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = "#325fa2";
+            ctx.arc(0, 0, 90, 0, 2 * Math.PI, false)
+            ctx.stroke()
+
+            // 分
+            ctx.beginPath();
+            for (let i = 0; i < 60; i++) {
+                let m = i * Math.PI / 30;
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = "#000"
+                ctx.moveTo(80 * Math.cos(m), 80 * Math.sin(m))
+                ctx.lineTo(70 * Math.cos(m), 70 * Math.sin(m))
+                ctx.stroke()
+            }
+
+            // 时
+            ctx.beginPath();
+            for (let i = 0; i < 12; i++) {
+                let m = i * Math.PI / 6;
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = "#000"
+                ctx.moveTo(80 * Math.cos(m), 80 * Math.sin(m))
+                ctx.lineTo(65 * Math.cos(m), 65 * Math.sin(m))
+                ctx.stroke()
+            }
+
+            let time = new Date();
+            let h = (time.getHours() % 12) * Math.PI / 6 - Math.PI / 2;
+            let m = time.getMinutes() * Math.PI / 30 - Math.PI / 2;
+            let s = time.getSeconds() * Math.PI / 30 - Math.PI / 2;
+
+            // 时针
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "black"
+            ctx.moveTo(-5 * Math.cos(h), -5 * Math.sin(h))
+            ctx.lineTo(40 * Math.cos(h), 40 * Math.sin(h))
+            ctx.stroke()
+
+
+            // 分针
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "black"
+            ctx.moveTo(-10 * Math.cos(m), -10 * Math.sin(m))
+            ctx.lineTo(55 * Math.cos(m), 55 * Math.sin(m))
+            ctx.stroke()
+
+            // 秒针
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "red"
+            ctx.moveTo(-15 * Math.cos(s), -15 * Math.sin(s))
+            ctx.lineTo(70 * Math.cos(s), 70 * Math.sin(s))
+            ctx.stroke()
+        }
+    </script>
+</body>
+
+</html>

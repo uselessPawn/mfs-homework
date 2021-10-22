@@ -1,0 +1,29 @@
+问答题：
+1. 什么是 Canvas？Canvas 能干那些事？
+Canvas提供了一个通过JavaScript 和 HTML的<canvas>元素来绘制图形的方式。
+它可以用于动画、游戏画面、数据可视化、图片编辑以及实时视频处理等方面。
+
+2. 画笔颜色，填充颜色各如何设置？
+画笔颜色设定：strokeStyle = color
+填充颜色设定：fillStyle = color
+
+3. Canvas 中如何画圆？如何填充圆？
+```
+ var canvas1 = document.getElementById("canvas1")
+        var ctx = canvas1.getContext("2d")
+        ctx.beginPath();
+        ctx.arc(100, 100, 80, 0, 2 * Math.PI, false)
+        ctx.stroke()
+```
+
+填充只要最后用ctx.fill()运行函数就可以了。
+
+4. Canvas 如何改变坐标系的位置和单位长度？
+translete(x,y)移动坐标原点。
+scale()
+缩放Scaling
+
+
+代码题：
+1.请使用 Canvas 绘制钟表，并可以动态显示当前时间
+
