@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shoppingCart</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 200px;
+            height: 300px;
+        }
+
+        .goods-item {
+            display: flex;
+            width: 200px;
+            height: 20px
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="goods-item">
+            <button class="add">+</button>
+            1号商品：
+            <div class="goods">0</div>
+            <button class="sub">-</button>
+        </div>
+        <div class="goods-item">
+            <button class="add">+</button>
+            2号商品：
+            <div class="goods">0</div>
+            <button class="sub">-</button>
+        </div>
+        <div class="goods-item">
+            <button class="add">+</button>
+            3号商品：
+            <div class="goods">0</div>
+            <button class="sub">-</button>
+        </div>
+        <div class="goods-item">
+            <button class="add">+</button>
+            4号商品：
+            <div class="goods">0</div>
+            <button class="sub">-</button>
+        </div>
+        <div class="goods-item">
+            <button class="add">+</button>
+            5号商品：
+            <div class="goods">0</div>
+            <button class="sub">-</button>
+        </div>
+
+    </div>
+
+
+    <script>
+        //这算mvc结构？
+
+        //从localStorage中取数据
+        //存的是一个JSON字符串，
+        let shoppingCart = localStorage.getItem('shoppingCart');
+        let goods = document.getElementsByClassName('goods');
+
+
+        if (shoppingCart == null) {
+            //如果为空，造好格式存入内存
+            shoppingCart = []
+            for (let i = 0; i < goods.length; i++) {
+                shoppingCart.push(0)
+            }
+            localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+        } else {
+            //如果不为空，那么取出解析，再用dom写到对应元素中
+            shoppingCart = JSON.parse(shoppingCart)
+            for (let i = 0; i < goods.length; i++) {
+                goods[i].innerHTML = shoppingCart[i]
+            }
+        }
+
+        //给加按钮绑定事件
+        let addBts = document.getElementsByClassName("add");
+        for (let i = 0; i < addBts.length; i++) {
+            addBts[i].addEventListener("click", () => {
+                let goods = addBts[i].parentNode.getElementsByClassName("goods")[0]
+                shoppingCart[i]++;
+                goods.innerHTML = shoppingCart[i];
+                localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart)); //更新缓存
+            })
+        }
+
+        //给减按钮绑定事件
+        let subBts = document.getElementsByClassName("sub");
+        for (let i = 0; i < subBts.length; i++) {
+            subBts[i].addEventListener("click", () => {
+                if (shoppingCart[i] != 0) {
+                    let goods = subBts[i].parentNode.getElementsByClassName("goods")[0]
+                    shoppingCart[i]--;
+                    goods.innerHTML = shoppingCart[i];
+                    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart)); //更新缓存
+                }
+            })
+        }
+    </script>
+
+</body>
+
+</html>

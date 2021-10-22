@@ -1,0 +1,47 @@
+问答题
+1. BOM 是什么？提供的 API 让我们能操作什么？
+BOM是Browser Object Model的缩写，简称浏览器对象模型
+
+BOM提供的API让我们有了能访问窗口对象的一些方法。我们可以用它来移动窗口位置，改变窗口大小，
+打开新窗口和关闭窗口，弹出对话框，进行导航以及获取客户的一些信息如：浏览器品牌版本，屏幕分辨率。
+但BOM最强大的功能是它提供了一个访问HTML页面的一入口——document对象，
+以使得我们可以通过这个入口来使用DOM的强大功能！！！
+
+
+2. window.name 有怎样的特性
+window.name属性用于设置当前浏览器窗口的名字。
+它有一个特点，就是浏览器刷新后，该属性保持不变。所以，可以把值存放在该属性内，然后跨页面、甚至跨域名使用。
+
+
+3. 如何获取窗口的尺寸？
+我们可以通过 window 对象获取浏览器窗口的尺寸：
+window.innerHeight - 浏览器窗口的内部高度
+window.innerWidth - 浏览器窗口的内部宽度
+
+4. 如何调整滚动条位置
+我们也可以通过方法scrollTo或者scrollBy方法改变滚动条位置到指定坐标
+如：
+window.scrollTo(0, 300); // 滚动条移动到300px处
+scrollBy(0, 100); // 滚动条下移100px
+
+
+5. 如何获取浏览器相关信息
+Window对象的navigator属性，指向一个包含浏览器相关信息的对象。
+
+navigator对象里的属性：
+userAgent属性返回浏览器的User-Agent字符串，用来标示浏览器的种类。
+screen对象包含了显示设备的信息。
+
+
+6. 如何得到一个元素计算后的属性值
+用getComputedStyle方法。
+var style = window.getComputedStyle("元素", "伪类");
+
+是一个可以获取当前元素所有最终使用的CSS属性值。返回的是一个CSS样式声明对象([object CSSStyleDeclaration])
+简单点理解就是将所有的css属性层叠起来，计算出一个元素最终的css样式。
+
+
+
+7. 如何模拟点击前进后退按钮的点击？
+调用window.history.back()
+
