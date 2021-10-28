@@ -1,0 +1,45 @@
+问答题：
+1. AJAX 是什么的简称？它和普通的 HTTP 请求有什么不同？
+Asynchronous JavaScript and XML的简称。
+
+普通的HTTP请求是同步顺序执行的，AJAX则是在浏览器和服务器之间使用异步数据传输从服务器获取数据。
+
+
+2. 传统网页的渲染模式和基于 AJAX 的网页渲染模式有何不同？
+
+传统网页每次更新页面都需要刷新整个页面显示最新数据。
+AJAX则能够脱离当前浏览器页面的请求、加载等独立执行。这意味着可以在不重新加载整个网页的情况下，通过JavaScript发送请求、接受服务器传来的数据，
+然后操作DOM将新数据对网页的某部分进行更新，使用Ajax最直观的感受是向服务器获取新数据不需要刷新页面等待了
+
+
+3. 如何模拟调试 AJAX 的数据
+
+
+
+4. 如何兼容老浏览器创建 XMLHttpRequest 对象？
+用try-catch语句不断嵌套，依次从新到旧地声明XMLHttpRequest对象。
+从新到旧依次为：XMLHttpRequest(), ActiveXObject("Msxm12.XMLHTTP"),ActiveXObject("Microsoft.XMLHTTP")
+
+
+5. XMLHttpRequest 对象有哪几个常用方法？分别对应的含义如何？
+
+
+
+6. 常见的 HTTP 请求头有哪些？如何使用 AJAX 设置 HTTP 请求头？
+
+
+7. 如何使用 AJAX 发起 POST 请求？
+
+
+
+
+
+
+代码题
+1. 请使用 AJAX 在自己的网页获取数据，并将数据以你喜欢的方法展现出来（可以渲染 dom，可以打印 console）
+可以通过 GET learning-api.mafengshe.com/news 获得数据（后端已经添加跨域返回头），该地址支持如下几个参数
+
+
+参数	    含义
+pageSize	默认值 30（最大200），每一页的新闻条目数
+page	    默认 1，请求的页数

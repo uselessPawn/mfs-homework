@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回到网页顶部</title>
+    <style>
+        .stone {
+            width: 1000px;
+            height: 2000px;
+            background-color: lightsalmon;
+            margin: 0 auto;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            background-color: lightskyblue;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="stone">填充物</div>
+        <div class="back-to-top">
+            回到顶部
+        </div>
+    </div>
+
+    <script>
+        let backToTop = document.getElementsByClassName("back-to-top")[0]
+        backToTop.addEventListener("click", () => {
+            window.scrollTo(0, 0);
+        })
+    </script>
+</body>
+
+</html>

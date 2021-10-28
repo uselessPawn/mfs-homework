@@ -1,0 +1,60 @@
+问答题
+1. setTimeout 或者 setInterval 设置定时器是准时触发的吗？为什么？如果不是，他可能延时触发还是延后触发？
+不一定准时触发，可能是延后触发。
+因为JS是单线程，而且是通过消息队列来实现事件触发。
+而当setTimeout和setInterval时间到达之后会将只是将它们的回调函数加入消息队列，等待JS这个单线程得空执行这些回调，而不是马上执行这些回调函数。
+因而setTimeout和setInterval里的回调函数延迟的时间其实还需要加上它们之后代码执行的时间，最终导致延后触发。
+
+
+2. 如下代码 setInterval 设置的定时器激活间隔为多少？为什么？
+```
+var start = new Date()
+setInterval(function(){
+  console.log(new Date() - start)
+  for(var i=0;i<1000*1000*1000;i++);//假设这行代码运行需要100ms
+},1000)
+```
+还是1S左右。
+
+第一次1S，第二次开始是
+
+
+3. 如下代码的输出是什么？为什么？
+
+```
+setTimeout(function(){
+  console.log(1);
+},0)
+console.log(2);
+```
+输出结果：
+2
+1
+
+
+
+4. 如下代码执行结果是什么？请解释原因
+var t = true;
+
+window.setTimeout(function (){
+   t = false;
+},1000);
+while (t){}
+alert('end');
+
+
+
+5. 我们会在很多代码里看到如下语句，请说明在什么场景下需要使用如下形式代码
+setTimeout(function(){
+  // balala
+  // 这里有很多代码
+  // balala
+},0)
+
+当希望里面那串很长的代码在程序的最后执行的时候使用。
+
+代码题
+1. 请用 setTimeout 模拟实现 setInterval，并说明你实现的函数和系统自带的 setInterval 有什么不同
+
+
+

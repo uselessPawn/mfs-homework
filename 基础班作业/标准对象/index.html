@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //请构造一个 Date 对象，它表示的时间为 2017-03-05 10:03:08
+        let date = new Date();
+        date.setUTCFullYear('2017')
+        date.setUTCMonth('2')
+        date.setUTCDate('5')
+        date.setUTCHours('2')
+        date.setUTCMinutes('3')
+        date.setUTCSeconds('8')
+        console.log(date.toLocaleString())
+
+        
+
+        function isInCircle(x, y) {
+            return Math.sin(x) ** 2 + Math.cos(y) ** 2 < 1;
+        }
+    </script>
+</body>
+
+</html>

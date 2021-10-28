@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>磁力贴</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .stone-1 {
+            height: 300px;
+            background-color: lightskyblue;
+        }
+
+
+        .magnet {
+            width: 1000px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            margin: 0 auto;
+            background-color: lightsalmon;
+        }
+
+        .magnet-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .stone-2 {
+            height: 2000px;
+            background-color: lightseagreen;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stone-1">
+        填充物
+    </div>
+
+    <div class="magnet">
+        磁力贴
+    </div>
+
+    <div class="stone-2">
+        填充物
+    </div>
+
+    <script>
+        let magnet = document.getElementsByClassName("magnet")[0];
+        window.addEventListener("scroll", addMagnetFixed);
+        window.addEventListener("scroll", removeMagnetFixed);
+
+        function addMagnetFixed() {
+            let magnet = document.getElementsByClassName("magnet")[0];
+            let isFixed;
+            if (magnet.getBoundingClientRect().top <= 0) {
+                isFixed = magnet.className.split(' ').some((className) => {
+                    return className == "magnet-fixed";
+                })
+            }
+            if (isFixed === false) {
+                magnet.className = magnet.className + " magnet-fixed"
+            }
+        }
+        console.log(magnet.style.height)
+
+        function removeMagnetFixed() {
+            let magnet = document.getElementsByClassName("magnet")[0];
+            let top = document.getElementsByClassName("stone-1")[0];
+            let isFixed = magnet.className.split(' ').some((className) => {
+                return className == "magnet-fixed";
+            })
+
+            //清除固定
+            if (isFixed && window.pageYOffset < magnet.offsetHeight + top.offsetHeight) {
+                let classArr = magnet.className.split(" ")
+                let target = classArr.indexOf("magnet-fiex")
+                classArr.splice(target, 1)
+                magnet.className = classArr.join(" ")
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>

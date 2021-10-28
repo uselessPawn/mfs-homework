@@ -1,0 +1,37 @@
+问答题：
+1. pattern 属性有什么用？我们可以通过它来实现哪种类型的表单验证，不能实现哪种表单验证？
+pattern属性是正则表达时,一般用来实现字符串的格式验证。
+像一些逻辑性的问题，比如检测用户名，省市级三级联动等需要和数据库的比对数据的不能实现。
+
+
+2. required 属性怎么设置？它和 pattern 属性的设置有什么不同？
+需要的时候为表单标签设置required="required",不需要是设置required="false"
+required只有两个可选值，却只能用来规定表单能否为空。
+
+
+3. html5 中如何实现自定义表单验证？其核心思想是通过调用什么函数？
+通过改变表单元素的验证状态属性。
+核心思想是通过调用表单元素的setCustomerValidiyt函数。
+
+
+4. inputElement.validity 有哪些属性，各是代表什么意思？实践中我们可以使用它来实现什么？
+1. valueMissing：   未输入值，违反了requied的要求
+2. typeMismatch：   输入值不符合email、url的限定
+3. patternMismatch：正则表达式验证失败
+4. tooLong：        输入值
+5. rangeUnderflow： 输入值小于最小值
+6. rangeOverflow：  输入值大于最大值
+7. stepMismatch：   输入数字不符合step的限定
+8. customError：    输入值不符合自定义的规则
+
+
+代码题：
+1. 请实现省市区三级联动（结合后端，实现数据懒加载），省市区数据可使用讲义中的数据
+
+
+2. 请实现有如下功能的用户注册表单
+字段	    含义	    要求
+username	用户名  	以字母开头，6-18个字符，需要去数据库查重，实时提现用户
+password	密码	    6-18个字符
+pwd-rpt	    重复密码	6-18个字符，需要和 password 字段一致
+

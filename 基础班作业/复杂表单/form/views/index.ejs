@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    #username-rpt {
+      display: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  <form action="/">
+    <div id="username-rpt">用户名已经被使用</div>
+    <div>
+      <label for="username">用户名：</label><input type="text" id="username" name="username" pattern="[a-zA-Z].{5,15}"
+        oninput="usernameHandle()">
+    </div>
+    <div>
+      <label for="password">密码：</label><input type="password" id="password" name="password" pattern=".{6,16}">
+    </div>
+    <div>
+      <label for="pwd-rpt">重复密码：</label><input type="password" id="pwd-rpt" name="pwd-rpt" oninput="pwdRptHandle()"
+        pattern=".{6,16}">
+    </div>
+    <div class="">
+      <input type="submit">
+    </div>
+  </form>
+  </div>
+
+  <script>
+    var timerId;
+
+    function usernameHandle() {
+      clearTimeout(timerId)
+      timer = setTimeout(() => {
+        let xhr = new XMLHttpRequest()
+        xhr.open('post', '/usernameRpt', true)
+        xhr.send()
+        xhr.onreadystatechange = function () {
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText)
+          }
+        }
+      }, 1000)
+    }
+
+    function pwdRptHandle() {
+      let psw = document.getElementById('password');
+      let pwdRpt = document.getElementById('pwd-rpt');
+
+      if (psw.value !== pwdRpt.value) {
+        pwdRpt.setCustomValidity("Password values do not match.")
+      } else {
+        pwdRpt.setCustomValidity("");
+      }
+    }
+  </script>
+
+</body>
+
+</html>

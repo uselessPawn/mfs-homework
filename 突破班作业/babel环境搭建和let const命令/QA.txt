@@ -1,0 +1,83 @@
+1. babel 是什么，它能干什么，不能干什么？
+babel是一种用途很多的javascript编译器，它把最新版的javascript编译成当下可以执行的版本，以满足浏览器的兼容性。
+
+
+2. 我们使用 babel 把 es6/7的代码编译为 es5代码后，为什么还需要引入 polyfill？
+因为一些ES6/7新增的一些API，ES5中没有，因而需要polyfill为ES5增加一些API。
+
+
+3. .babelrc文件是干嘛的？常见配置是什么？
+设置babel的运行参数，比如编译的目标ES版本。
+
+常见配置
+{
+    presets:["env","es2017"]
+}
+
+4. presets 中设置 env 是什么含义？
+env是编译的运行环境。
+
+
+5. babel 中 presets 与 plugin 有什么区别？有什么联系？
+可以简单的把Babel Preset视为Babel Plugin的集合。
+
+执行顺序不一样：
+可以同时使用多个Plugin和Preset，此时，它们的执行顺序非常重要。
+1.先执行完所有Plugin，再执行Preset。
+2.多个Plugin，按照声明次序顺序执行。
+3.多个Preset，按照声明次序逆序执行。
+
+
+6. 请比较 let,var,const 命令的不同
+1. var声明变量存在变量提升，let和const不存在变量提升
+
+2. let、const都是块级局部变量 
+
+3. const 的特性和 let 完全一样，不同的只是
+    1. 声明时候必须赋值
+    2. 只能进行一次赋值，即声明后不能再修改
+    3. 如果声明的是复合类型数据，可以修改其属性
+
+4. 同一作用域下let和const不能声明同名变量，而var可以
+代码题:
+1. 以下代码在 presets:['env'] 环境下编译结果是什么？ 请解释 babel 为什么这样编译（babel 是通过什么方法保证两段代码等价的）
+
+```
+var a = 10;
+{
+   let _a = 11;
+   const b = 12;
+   console.log(_a);
+}
+var _a = 13;
+console.log(_a);
+```
+
+```
+var a = 10;
+{
+  var _a2 = 11;
+  var b = 12;
+  console.log(_a2);
+}
+var _a = 13;
+console.log(_a);
+```
+通过更改变量名的方式保证变量名不重复。
+
+2. 以下代码在 presets:['env'] 环境下编译结果是什么？为什么？
+```
+const a = 10
+a = 20;
+```
+
+
+```
+
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
+
+var a = 10;
+20, _readOnlyError("a");
+```
+
+const在声明之后不能改变值，因而就手动抛出一个相同的错误。

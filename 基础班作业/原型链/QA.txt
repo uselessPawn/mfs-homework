@@ -1,0 +1,103 @@
+问答题
+1. js中对象的属性查找机制是什么？请写出实现属性查找机制的伪代码
+先找自身属性，如果没有，再去原型里找，原型找不到，找到原型的原型里去找。
+
+findProperty(obj, property){
+    if(obj.hasOwnProperty(property)) {
+        return obj[property];
+    }
+
+    var proto = obj.__proto__;
+    while(proto) {
+        if(obj.hasOwnProperty(property)) {
+            return obj[property];
+        }
+        proto = proto.__proto;
+    }
+
+    return undefined;
+}
+
+
+2. 自学ES5的 Object.create() 函数，然后用自己的代码重新实现
+
+function Mycreate(proto) {
+    function F(){}
+    F.prototype = proto;
+    proto.constructor = F;
+    return new F();
+}
+
+
+3. 使用原型链实现继承，本质通过改变对象的什么，来实现继承？
+本质通过改变对象的共享属性来实现继承。
+
+
+4. 当我们使用new关键字，其背后干了哪些事？
+1. 在内存中新建一个新对象
+2. 将这个新对象的__proto__属性设置为函数的prototype属性
+3. 构造函数内部的this属性被设置为这个新对象
+4. 按照构造函数给新对象添加属性。
+5. 如果构造函数内返回一个非空对象，则返回那个对象。否则，返回刚创建的新对象。
+
+
+5. 讲义中使用 Book.prototype = new Goods() 实现继承有什么不完美的地方？
+1. 属性有多份
+2. 无法给Goods传参数，因为参数只有在调用时才知
+3. 调用2次Goods的构造函数，影响效率。
+
+
+6. 画出代码题1的原型图，需要画到null
+
+
+代码题
+假定我们的代码中需要4个类，分别是 Animal，Dog，Cat，Human。
+Animal 有方法 eat,sleep;Dog,Cat有方法bark；Human有方法speak；请使用js中的继承实现。
+
+```
+function Animal() {
+
+}
+
+Animal.prototype.eat = function(food) {
+    console.log("eat "+food)
+}
+
+Animal.prototype.sleep = function(h) {
+    console.log("slept "+h+" hour.")
+}
+//
+function Dog() {
+    Animal.call(this)
+}
+
+Dog.prototype.bark = function() {
+    console.log("汪汪")
+}
+
+Dog.prototype.proto = Animal.prototype;
+Dog.prototype.constructor = Dog;
+
+//
+function Cat() {
+    Animal.call(this)
+}
+
+Cat.prototype.bark = function() {
+    console.log("喵喵")
+}
+
+Cat.prototype.proto = Animal.prototype;
+Cat.prototype.constructor = Cat;
+
+//
+function Human() {
+    Animal.call(this)
+}
+Human.prototype.speak(word) {
+    console.log(word)
+}
+
+Human.prototype.proto = Animal.prototype;
+Human.prototype.constructor = Human;
+```

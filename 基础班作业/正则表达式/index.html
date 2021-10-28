@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var start = new Date()
+        for (let j = 0; j < 5; j++) {
+            for (var i = 0; i < 1000 * 1000 * 1000; i++); //实测这段代码延迟是1700ms
+            console.log(new Date() - start)
+        }
+
+        var start = new Date()
+        setInterval(function () {
+            for (var i = 0; i < 1000 * 1000 * 100; i++); //假设这行代码运行需要100ms
+            console.log(new Date() - start)
+        }, 1000)
+
+
+    </script>
+</body>
+
+</html>

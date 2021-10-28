@@ -1,0 +1,39 @@
+问答题：
+1. 了解什么是域
+假设当前显示页面地址为 http://bbs.mafengshe.com/a/b.html
+
+http://bbs.mafengshe.com/a/b/c.html
+http://bbs.mafengshe.com/a.html
+http://bbs.mafengshe.com/pic.png
+https://bbs.mafengshe.com/a/b.html
+http://bbs.mafengshe.com:81/a/b.html
+http://work.mafengshe.com/a/b.html
+http://mafengshe.com/a/b/c.html
+file:///a/b.html
+是什么原因造成直接跨域访问失败？
+
+
+http://bbs.mafengshe.com/a/b/c.html  ————不跨域
+http://bbs.mafengshe.com/a.html  ————不跨域
+http://bbs.mafengshe.com/pic.png  ————不跨域
+https://bbs.mafengshe.com/a/b.html  ————跨域，协议不同
+http://bbs.mafengshe.com:81/a/b.html  ————跨域，端口不一样
+http://work.mafengshe.com/a/b.html  ————跨域，域名不同
+http://mafengshe.com/a/b/c.html  ————跨域，域名不同
+file:///a/b.html                 ————跨域，协议不同
+
+
+2. 跨域有哪几种方法？他们的原理各是什么？各有什么局限性？（如果有的话）
+需要回答四种跨域方法
+
+
+
+3. 本地如何模拟跨域访问？
+请演示并截图
+
+
+
+代码题：
+1. 请使用 降域 实现 iframe 跨域
+
+2. 请实现 JSONP 跨域，后端可采用静态服务器

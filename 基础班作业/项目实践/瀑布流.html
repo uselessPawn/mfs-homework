@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀑布流</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .waterfall {
+            position: relative;
+        }
+
+        [class*=item] {
+            width: 250px;
+            position: absolute;
+            margin-right: 50px;
+        }
+
+        .item-1 {
+            height: 300px;
+            background-color: lightsalmon;
+        }
+
+        .item-2 {
+            height: 400px;
+            background-color: lightseagreen;
+        }
+
+        .item-3 {
+            height: 500px;
+            background-color: lightskyblue;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="waterfall">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+        <div class="item-1">4</div>
+        <div class="item-2">5</div>
+        <div class="item-3">6</div>
+        <div class="item-1">7</div>
+        <div class="item-2">8</div>
+        <div class="item-3">9</div>
+        <div class="item-1">10</div>
+        <div class="item-2">11</div>
+        <div class="item-3">12</div>
+        <div class="item-1">13</div>
+        <div class="item-2">14</div>
+        <div class="item-3">15</div>
+        <div class="item-1">16</div>
+        <div class="item-2">17</div>
+        <div class="item-3">18</div>
+    </div>
+
+    <script>
+        waterfall();
+        window.addEventListener("resize", waterfall)
+
+        function waterfall() {
+            let waterfall = document.getElementsByClassName("waterfall")[0];
+            //计算可以有几列
+            let items = Array.from(document.querySelectorAll("[class*=item]"))
+            let elMarginRightStr = window.getComputedStyle(items[0], null).marginRight
+            let elMarginRight = parseInt(elMarginRightStr.substr(0, elMarginRightStr.length - 2))
+            let colNum = Math.floor(window.innerWidth / (items[0].offsetWidth + elMarginRight))
+
+
+            //建立列模型,并按照贪心算法填进列模型
+            let colModel = [] //里面存的是列的高度
+            for (let i = 0; i < colNum; i++) {
+                colModel[i] = 0;
+            }
+            let domCols = document.getElementsByClassName("col");
+
+            for (let i = 0; i < items.length; i++) {
+                let minIndex = 0;
+                for (let j = 1; j < colNum; j++) {
+                    if (colModel[minIndex] > colModel[j]) minIndex = j;
+                }
+                console.log(colModel[minIndex])
+                items[i].setAttribute("style", "top:" + colModel[minIndex] + "px; " +
+                    "left:" + (minIndex * 300) + "px;")
+                colModel[minIndex] += items[i].offsetHeight + 50;
+            }
+        }
+    </script>
+</body>
+
+</html>

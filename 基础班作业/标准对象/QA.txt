@@ -1,0 +1,114 @@
+问答题
+1. JavaScript 有哪些常用的标准对象？
+Math：数学运算相关
+Date：日期相关
+JSON：序列化和反序列化 JavaScript 对象。
+
+
+2. Math 对象有哪些常用方法和常量？(要记的：四舍五入用round，)
+方法：
+abs(x)	    返回数的绝对值。
+acos(x)	    返回数的反余弦值。
+asin(x)	    返回数的反正弦值。
+atan(x)	    以介于 -PI/2 与 PI/2 弧度之间的数值来返回 x 的反正切值。
+atan2(y,x)	返回从原点(0,0) 到 (x,y) 点的线段与 x 轴正方向之间的平面角度(弧度值)。
+ceil(x)	    对数进行上舍入。
+cos(x)	    返回数的余弦。
+exp(x)	    返回 e 的指数。
+floor(x)	对数进行下舍入。
+log(x)	    返回数的自然对数（底为e）。
+max(x,y)	返回 x 和 y 中的最高值。
+min(x,y)	返回 x 和 y 中的最低值。
+pow(x,y)	返回 x 的 y 次幂。
+random()	返回 0 ~ 1 之间的随机数。
+round(x)	把数四舍五入为最接近的整数。
+sin(x)	    返回数的正弦。
+sqrt(x)	    返回数的平方根。
+tan(x)	    返回角的正切。
+toSource()	返回该对象的源代码。  //弃用
+valueOf()	返回 Math 对象的原始值。
+
+
+
+常量：
+E	    返回算术常量 e，即自然对数的底数（约等于2.718）。
+LN2	    返回 2 的自然对数（约等于0.693）。
+LN10	返回 10 的自然对数（约等于2.302）。
+LOG2E	返回以 2 为底的 e 的对数（约等于 1.414）。
+LOG10E	返回以 10 为底的 e 的对数（约等于0.434）。
+PI	    返回圆周率（约等于3.14159）。
+SQRT1_2	返回返回 2 的平方根的倒数（约等于 0.707）。
+SQRT2	返回 2 的平方根（约等于 1.414）。
+
+
+3. 如何获取当前时间？如何根据需要构建 Date 对象？（要记的月份从0开始，Day系列是一周里的天，也从0开始。Date系列才是月里的日，且从1开始。）
+var myDate=  new Date()
+
+4. 什么是 JSON？JSON 在 JavaScript 中是什么数据类型？在网页构建的过程中，我们常用 JSON 来干什么？
+JSON 对象主要用来序列化和反序列化 JavaScript 对象。
+序列化后的对象是字符串类型。
+在网页构建过程中，我们将JSON作为一种轻量级的数据交换格式，或者用JSON写一些配置文件。
+
+
+5. 如何将 JSON 转化为 JavaScript 中的 Object？
+JSON.stringify()
+
+
+
+6. 如何将 JavaScript 中的 Object 转化为 JSON ？
+JSON.parse() 方法用来解析JSON字符串，构造由字符串描述的JavaScript值或对象。
+提供可选的reviver函数用以在返回之前对所得到的对象执行变换(操作)。
+JSON.parse(text[, reviver])
+
+text
+要被解析成JavaScript值的字符串，查看 JSON 对象学习的JSON 语法的说明。
+
+reviver 可选
+如果是一个函数，则规定了原始值在被返回之前如何被解析改造。
+
+JSON.stringify() 
+该方法将一个JavaScript值(对象或者数组)转换为一个 JSON字符串，
+如果指定了replacer是一个函数，则可以替换值，或者如果指定了replacer是一个数组，可选的仅包括指定的属性。
+JSON.stringify(value[, replacer [, space]])
+
+value
+将要序列化成 一个JSON 字符串的值。
+
+replacer 可选
+如果该参数是一个函数，则在序列化过程中，被序列化的值的每个属性都会经过该函数的转换和处理；
+如果该参数是一个数组，则只有包含在这个数组中的属性名才会被序列化到最终的 JSON 字符串中；
+如果该参数为null或者未提供，则对象所有的属性都会被序列化；
+关于该参数更详细的解释和示例，请参考使用原生的 JSON 对象一文。
+
+space 可选
+指定缩进用的空白字符串，用于美化输出（pretty-print）；
+如果参数是个数字，它代表有多少的空格；上限为10。该值若小于1，则意味着没有空格；
+如果该参数为字符串(字符串的前十个字母)，该字符串将被作为空格；
+如果该参数没有提供（或者为null）将没有空格。
+
+
+
+代码题
+1. 请构造一个 Date 对象，它表示的时间为 2017-03-05 10:03:08
+```
+    let date = new Date();
+    date.setUTCFullYear('2017')
+    date.setUTCMonth('2')
+    date.setUTCDate('5')
+    date.setUTCHours('2')
+    date.setUTCMinutes('3')
+    date.setUTCSeconds('8')
+    console.log(date.toLocaleString())
+```
+
+
+2. 请实现函数 isInCircle(x,y) 实现给定二维平面上点 P 的坐标 (x,y) ，函数返回点 P 是否在标准圆（半径为 1 的圆）内。
+    > 在标准圆内，返回 true
+    > 不在标准圆内，返回 false
+
+
+```
+        function isInCircle(x, y) {
+            return Math.sin(x) ** 2 + Math.cos(y) ** 2 < 1;
+        }
+```

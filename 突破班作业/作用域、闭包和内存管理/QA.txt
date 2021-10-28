@@ -1,0 +1,226 @@
+1. 如下代码会报错吗？如果报错请说明原因，如果不报错请说明运行结果和原因
+```
+for(var i = 1; i<5; i++){
+   console.log(i);
+}
+console.log(i);
+```
+不报错
+输出
+1
+2
+3
+4
+5
+undefined
+
+
+2. 如下代码输出是什么？为什么？请写出js解释器实际执行的等效代码
+```
+var v='Hello World'; 
+(function(){ 
+   console.log(v); 
+   var v='I love you'; 
+})()
+```
+
+输出：
+undefined
+
+实际等效代码：
+var a =  function() { //这个a只是代称
+    var v;
+    console.log(v);
+    v = 'I love you';
+}
+var v;
+a();
+v = 'Hello World'
+
+
+3. 如下代码输出是什么？为什么？请写出js解释器实际执行的等效代码
+function main(){ 
+   console.log(foo);     // ?
+   var foo = 10;
+   console.log(foo);     // ?
+   function foo(){ 
+      console.log("我来自 foo"); 
+   } 
+   console.log(foo);     // ?
+} 
+main();
+
+输出
+function foo() {
+        console.log("我来自 foo");
+    }
+10
+10
+
+等效代码：
+function main() {
+    function foo() {
+        console.log("我来自 foo");
+    }
+
+    var foo;
+    console.log(foo)
+    foo = 10;
+    console.log(foo);
+    console.log(foo)
+}
+
+
+4. 如下代码输出是什么？为什么？
+```
+var a = 10;
+var foo = {
+   a: 20,
+   bar: function () {
+      var a = 30;
+      return this.a;
+   }
+};
+
+console.log(
+   foo.bar(),             // ?
+   (foo.bar)(),           // ?
+   (foo.bar = foo.bar)(), // ?
+   (foo.bar, foo.bar)()   // ?
+   );
+```
+20
+20
+10
+10
+
+原因：简单点说，就是JS的类型分为语言类型和规范类型。
+
+ECMAScript 语言类型是开发者直接使用 ECMAScript 可以操作的。其实就是我们常说的Undefined, Null, Boolean, String, Number, 和 Object。
+而规范类型相当于 meta-values，是用来用算法描述 ECMAScript 语言结构和 ECMAScript 语言类型的。
+在规范的11.2.3 Function Calls：
+讲了当函数调用的时候，如何确定 this 的取值。
+即：
+1.计算 MemberExpression 的结果赋值给 ref
+2.判断 ref 是不是一个 Reference 类型
+2.1 如果 ref 是 Reference，并且 IsPropertyReference(ref) 是 true, 那么 this 的值为 GetBase(ref)
+2.2 如果 ref 是 Reference，并且 base value 值是 Environment Record, 那么this的值为 ImplicitThisValue(ref)
+2.3 如果 ref 不是 Reference，那么 this 的值为 undefined
+
+说人话就是在调用函数运行符号()之前，会先判断()前的执行结果。
+如果是规范类型是Reference，那么继续判断父级作用域，如果父级作用域是全局（JS寄生的环境）,那么就返回ImplicitThisValue(ref)。
+查看规范 10.2.1.1.6，ImplicitThisValue 方法的介绍：该函数始终返回 undefined。
+而在浏览器的非严格模式下，this的值为undefined的时候，默认为window。
+
+因而只有规范类型是Reference，而且父级作用域不是全局，this才是指向调用使用this的函数的所在对象。
+
+还是根据协议，
+
+第一个输出是正常使用。
+第二个输出
+用了()，根据协议11.1.6 The Grouping Operator，它不改变引用类型，因而和正常一样。
+
+第三个输出
+，有赋值操作符，查看规范 11.13.1 Simple Assignment ( = ):
+计算的第三步：
+3.Let rval be GetValue(rref).
+因为使用了 GetValue，所以返回的值不是 Reference 类型，
+因而这时this为undefined,非严格变成window，因而输出的是全局里的变量
+
+
+第四个输出
+逗号操作符，查看规范11.14 Comma Operator ( , )
+计算第二步：
+2.Call GetValue(lref).
+因为使用了 GetValue，所以返回的不是 Reference 类型，this 为 undefined
+所以this也是undefined
+
+
+
+5. 如下代码输出是什么？为什么？请写出js解释器实际执行的等效代码
+var a = 10;
+function main(){
+   console.log(a);        // ?
+   var a = 20;
+   console.log(a);        // ?
+   (function(){
+      console.log(a);     // ?
+      var a = 30;
+      console.log(a);     // ?
+   })()
+   console.log(a);        // ?
+}
+main()
+
+输出
+undefined
+20
+undefined
+30
+20
+
+等效代码：
+var a;
+function main() {
+    function  代号() {
+        var a;
+        console.log(a)
+        a = 30
+        console.log(a)
+    }
+    var a ;
+    console.log(a) //undefined
+    a = 20; 
+    console.log(a) //20
+    代号()    //undefined 30
+    console.log(a) //20
+}
+a = 10;
+main();
+
+
+6. 为什么点击所有的button打印出来的都是5而非0,1,2,3,4？要怎么修改？
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>JS Bin</title>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<body>
+<ul>
+<li><button>0</button></li>
+<li><button>1</button></li>
+<li><button>2</button></li>
+<li><button>3</button></li>
+<li><button>4</button></li>
+</ul>
+</body>
+</html>
+var buttons = $("button")
+
+for(var i=0;i<buttons.length;i++){
+   buttons[i].onclick = function(){
+      console.log(i)
+   }
+}
+
+
+7. 什么是内存泄漏？怎样判断自己的程序是否有内存泄漏？
+进程从操作系统获取了内存，不再需要却没有释放，就可以认为是内存泄漏.
+
+Chrome的Devtool已经提供了检查的工具，也就是Memory面板。
+我们可以通过这个工具对页面中某一时刻的内存状态做一个快照，这个快照中包含此刻页面上所有的Dom节点和js对象。
+我们可以搜索可能泄露的js对象来证实内存泄漏的存在。
+简单点说就是只能用Chrome截取JS代码运行的状态。
+个人理解是变量有没有用是需要人为判断的，计算机无法判断符合逻辑但不是不符合预期的结果。
+
+
+8. 什么是循环引用？循环引用在V8下会造成内存泄漏吗？
+循环引用就是两个变量互相使用了彼此，导致引用数都大于1。
+不会。
+V8引擎已经能很好的处理循环引用的情况，即循环引用的对象当没有外部引用时，会被正确的回收。
+
