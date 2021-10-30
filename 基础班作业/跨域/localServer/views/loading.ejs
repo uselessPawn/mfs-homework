@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loading</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .container {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .loading-circle {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            transform-origin: 16px 16px;
+            animation: cirlce-box-ani 5s linear infinite;
+        }
+
+        .circle-box {
+            position: absolute;
+            display: flex;
+            width: 64px;
+            justify-content: space-between;
+            align-items: center;
+            top: 4px;
+            left: 0px;
+            transform-origin: 4px 4px;
+
+        }
+
+        .circle-box:nth-child(1) {
+            transform: rotate(0deg);
+        }
+
+
+        .circle-box:nth-child(2) {
+            transform: rotate(90deg);
+        }
+
+        .circle-box:nth-child(3) {
+            transform: rotate(180deg);
+        }
+
+        .circle-box:nth-child(4) {
+            transform: rotate(270deg);
+        }
+
+        .circle-box:nth-child(1) .circle {
+
+            background-color: lightsalmon;
+        }
+
+        .circle-box:nth-child(2) .circle {
+            background-color: lightgreen;
+        }
+
+        .circle-box:nth-child(3) .circle {
+            background-color: lightblue;
+        }
+
+        .circle-box:nth-child(4) .circle {
+            background-color: lightgoldenrodyellow;
+        }
+
+
+        .circle {
+            border-radius: 50%;
+            animation: circle-ani 2.5s linear infinite;
+        }
+
+        .small {
+            width: 8px;
+            height: 8px;
+            animation-delay: -0.3s;
+        }
+
+        .middle {
+            width: 16px;
+            height: 16px;
+            animation-delay: -0.6s;
+        }
+
+        .big {
+            width: 24px;
+            height: 24px;
+            animation-delay: -0.9s;
+
+        }
+
+
+        /* 动画部分 */
+        @keyframes circle-ani {
+            0% {}
+
+            25% {
+                transform: translate(-64px, 0);
+            }
+
+            75% {
+                transform: translate(32px, 0);
+            }
+
+            100% {
+                transform: translate(0px, 0);
+            }
+        }
+
+        @keyframes cirlce-box-ani {
+            0% {}
+
+            50% {
+                transform: rotate(180deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="loading-circle">
+            <div class="circle-box">
+                <div class="circle small"></div>
+                <div class="circle middle"></div>
+                <div class="circle big"></div>
+            </div>
+            <div class="circle-box">
+                <div class="circle small"></div>
+                <div class="circle middle"></div>
+                <div class="circle big"></div>
+            </div>
+            <div class="circle-box">
+                <div class="circle small"></div>
+                <div class="circle middle"></div>
+                <div class="circle big"></div>
+            </div>
+            <div class="circle-box">
+                <div class="circle small"></div>
+                <div class="circle middle"></div>
+                <div class="circle big"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.domain = 'a.com'
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+问答题
+1. 什么是箭头函数？它和 function 声明的函数有什么区别？
+箭头函数也是匿名函数，一般写成()=>{}的形式
+
+区别：
+1.
+箭头函数没有自己的this，在箭头里使用this的时候，会从箭头函数定义的父执行上下文开始，不断向上追溯，直到找到this。  
+
+此外，因为没有this，一系列和this有关的方法和关键字都不能使用，比如bind，new等。
+2. 
+如果return的结果只有一个表达式，可以省略return和花括号；
+如果只有参数有且只有一个和返回只有一个表达式，那么不仅可以省return和花括号，还能省略参数的括号。
+
+
+2. 下面代码输出的是什么？为什么？
+```
+var a = 2
+var obj = {
+   a : 1,
+   fun : function () {
+      console.log(this.a)
+   }
+}
+
+var obj2 ={
+   a : 3
+}
+
+obj.fun()          // ?
+
+var fun = obj.fun;
+fun()              // ?
+
+obj2.fun = obj.fun
+obj2.fun()         // ?
+```
+
+输出
+1
+2
+3
+因为this的值只有在运行的时候才会被确定，且指向的是它的父作用域。
+
+
+3. 下面代码输出的是什么？为什么？
+```
+var a = 2
+var obj = {
+   a : 1,
+   fun : () => {
+      console.log(this.a)
+   }
+}
+
+var obj2 ={
+   a : 3
+}
+
+obj.fun()          // ?
+var fun = obj.fun;
+fun()              // ?
+obj2.fun = obj.fun
+obj2.fun()         // ?
+```
+
+输出
+2
+2
+2
+因为箭头函数自己没有this，在其内部调用this等同于调用父作用域的this。
+
+
+4. 箭头函数的this静态绑定是什么含义？和this的动态绑定有什么区别？请写出示例代码说明区别
+静态函数的箭头函数没有自己的this，在箭头里使用this的时候，会从箭头函数定义的父执行上下文开始，不断向上追溯，直到找到this。  
+
+示例代码：
+```
+//在浏览器环境
+var a = 0;
+yi = {
+    a: 1,
+    fun1: () => this.a,
+    er: {
+        a: 2,
+        fun2: () => this.a,
+        san: {
+            a: 3,
+            fun3: () => this.a
+        }
+    }
+}
+
+console.log(yi.fun1())          // 0    this指向的是全局变量，因为简单对象{}没有自己的执行上下文。
+console.log(yi.er.fun2())       // 0
+console.log(yi.er.san.fun3())   // 0
+``` 
+
+
+```
+var a = 0;
+yi = {
+    a: 1,
+    fun1: function () { return this.a },
+    er: {
+        a: 2,
+        fun2: function () { return this.a },
+        san: {
+            a: 3,
+            fun3: function () { return this.a },
+        }
+    }
+}
+
+console.log(yi.fun1())          //1
+console.log(yi.er.fun2())       //2
+console.log(yi.er.san.fun3())   //3
+
+```
+
+
+5. 下面代码输出是什么？结合第三题，试理解this静态绑定的绑定规则。
+```
+var id = 2;
+function foo() {
+   return () => {
+      console.log('id:', this.id);
+   };
+}
+
+foo.call({id: 1})()
+```
+输出
+id:2
+
+6. 对于function声明的函数，如果想实现箭头函数的this静态绑定，需要怎么做？
+在函数声明之后使用bind方法，如function(a,b){return this.a+this.b}.bind(otherObj)
+
+7. 什么是柯里化(currying)，它有什么作用？
+接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。
+
+
+8. 下面代码输出的是什么？为什么？
+let fun1 = i => i*2
+let fun2 = i => {i*2}
+
+console.log(fun1(1))   // ?
+console.log(fun2(1))   // ?
+
+输出
+2
+undefined
+因为return必须和花括号一起省略。如果只省略return,不省略花括号，系统会return undefined
+
+
+9. 什么是 Set ，它和数组有什么异同？
+Set是集合。
+和数组最大的区别在于集合内的数据只有唯一性，用全等号（===）判断。
+
+
+10. 什么是 WeakSet / WeakMap？和 Set / Map 有什么异同：？
+WeakSet 结构与 Set 类似，也是不重复的值的集合。
+Map 结构提供了“值—值”的对应，是一种更完善的 Hash 结构实现。如果你需要“键值对”的数据结构，Map 比 Object 更合适。
+
+和 Set / Map 有什么异同：
+首先，只接受对象作为键名（null除外），不接受其他类型的值作为键名。
+其次，键名所指向的对象，不计入垃圾回收机制。
+
+在 API 上的区别主要是两个，
+一是没有遍历操作（即没有keys()、values()和entries()方法），也没有size属性。
+二是无法清空，即不支持clear方法。因此，只有四个方法可用：get()、set()、has()、delete()。
+
+代码题
+
+1. 请把下列代码改写成箭头函数的写法
+```
+[1,2,3].map(function (x) {
+   return x * x;
+});
+```
+
+```
+[1,2,3].map(x=>x*x)
+```
+
+2. 请将下面函数柯里化(currying)，需要写出箭头函数和非箭头函数两种答案
+ function cala(add, mul, origin) {
+     return (origin + add) * mul
+ }
+
+```
+function curringCala1(add) {
+    return function (mul) {
+        return function (origin) {
+            return (origin + add) * mul
+        }
+    }
+}
+
+let curringCala2 = add => mul => origin => (origin + add) * mul
+
+
+console.log(curringCala1(1)(2)(3))
+console.log(curringCala2(1)(2)(3))
+
+
+```
+
+3. 请使用 Set 实现数组去重
+```
+let a = [1,1,2,2,2,3,3,4]
+a = [...new Set(a)]
+console.log(a)
+```
+
+4. 请实现打印 Map 中所有的键值对
+```
+var map = new Map()
+
+map.set('a', 1)
+map.set('b', 2)
+map.set('c', 3)
+
+for([key,value] of map.entries()) {
+    console.log(key,value)
+}
+
+```

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajaxGet</title>
+</head>
+
+<body>
+    <script>
+        var url = 'http://learning-api.mafengshe.com/news?pageSize=10&page=2'
+        const ajaxGet = function (url) {
+            const promise = new Promise((resolved, rejected) => {
+                let xhr = new XMLHttpRequest()
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                            resolved(JSON.parse(xhr.responseText))
+                        } else {
+                            rejected(xhr.statusText)
+                        }
+                    }
+                }
+                xhr.open('get', url);
+                xhr.send();
+            })
+            return promise;
+        }
+
+        ajaxGet(url)
+            .then((data) => {
+                console.log(data)
+            })
+            .catch((reason) => {
+                console.log(reason) 
+            })
+    </script>
+</body>
+
+</html>
