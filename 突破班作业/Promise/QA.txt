@@ -2,8 +2,9 @@
 1. Promsie 对象有几种状态？他们之间是怎么转换的？
 三种状态
 pending     未处理
-fulfilled    成功
+fulfilled   成功
 rejected    出错
+resolved    落定
 
 只存在pending转换成fulfilled和rejected两种转换。
 
@@ -106,6 +107,36 @@ console.log(p1 === p2)
 
 
 3. 请利用自己实现的 ajaxGet(url) 函数，实现串行（一个接一个的）发送10个请求，来获取下面 api 的前10页数据
+思路：
+所有Promise实例，then方法里的回调函数都要等到主程序其他代码执行完成才会执行，那么不如就用一个循环给ajaxGet.then加回调函数
+```
+        // 串行调用n次ajaxGet,
+        function serialAjaxGet(n, dataHandler) {
+            let p = new Promise((resolve) => {
+                resolve()
+            })
+
+            for (let i = 1; i <= n; i++) {
+                p = p.then((data) => {
+                    if (data)
+                        dataHandler(data.result.data.list[0].title)
+                    return ajaxGet(`http://learning-api.mafengshe.com/news?pageSize=10&page=${i}`)
+                })
+            }
+
+            p.then((data) => { //最后一次要手动加，因为它不再请求了，和前面N-1次的行为不一样，额外设置一下
+                dataHandler(data.result.data.list[0].title)
+            })
+        }
+        
+        serialAjaxGet(10, dataHandler);
+
+        function dataHandler(data) {
+            console.log(data)
+        }
+```
+
+
 
 
 4. 请利用自己实现的 ajaxGet(url) 函数，实现并行（同时）发送10个请求，来获取下面 api 的前10页数据

@@ -1,0 +1,97 @@
+问答题
+1. Symbol 是什么？有哪些使用场景？
+Symbol是ES6新增的数据类型，且它的实例是唯一的、不可变的。
+它的用途是保证对象属性使用唯一的标识符，不会发生属性冲突的危险。
+
+
+2. Symbol("foo") == Symbol("foo")输出什么？为什么？
+false。
+因为Symbol构造函数里输入的字符串只是描述作用，将来可以根据这个字符串调试。但是这个字符串和Symbol的表示或定义毫无关系。
+
+3. Symbol.iterator 是什么？这里为什么要使用 Symbol 那？
+按照规范，这个Symbol作为一个属性表示“一个方法，该方法返回对象默认的迭代器。由for-of使用”
+因为为了避免iterator与其他属性或方法名冲突。
+个人认为使用了Symbol作为属性表明这个对象实现了iterator这样的一个接口，近似接口声明感觉。
+
+
+4. 哪些对象（容器）内部实现了 iterator ？
+Array, String, Set, Map
+
+
+5. 数组解构的核心本质是什么？哪些对象（容器）可以作为数组解构的右值？
+用迭代器不断从右值中取出值，然后为数组赋值。
+实现了迭代器的对象都可以作为右值。
+
+
+代码题
+1. 请实现与下面 generator 函数 等价的迭代器
+```
+function* gen(){
+   yield 1
+   yield 2
+   return 3;
+}
+```
+
+function itr() {
+    let arr[1,2,3]
+    let i=0;
+    return next()=>{
+        return {value:arr[i++],done:i<length}
+    }
+}
+
+
+
+2. 请给对象 let obj={} 加上迭代器，实现可以无限打印 a
+
+```
+let obj = {}
+obj[Symbol.iterator] = () => {
+    return {
+        next() {
+            return { value: "a", done: false }
+        }
+    }
+}
+
+let objIt = obj[Symbol.iterator]()
+console.log(objIt.next())
+console.log(objIt.next())
+console.log(objIt.next())
+
+```
+
+3. 请给对象 obj 加上迭代器，使其可以像数组一样使用 for of 循环
+```
+let obj = {
+   [0] : "a",
+   [1] : "b",
+   [2] : "c",
+   length : 3
+}
+```
+
+
+```
+let obj = {
+    [0]: "a",
+    [1]: "b",
+    [2]: "c",
+    length: 3
+}
+
+obj[Symbol.iterator] = function () {
+    let i = 0;
+    return {
+        next: () => {
+            return { value: this[i], done: i++ == this.length }
+        }
+    }
+}
+
+for (let value of obj) {
+    console.log(value)
+}
+
+```

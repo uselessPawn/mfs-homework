@@ -3,14 +3,11 @@
 有Cookie和Web Storage。
 
 
-
-
 2. Cookie 对比 Web Storage 有何异同？
-相同：
+相同：都能用来存储
 
 不同：
-数量：cookie在浏览器中能存的数量比较少，一个cookie最多可以存放4096B左右的数据。
-相比用Web Storage更适合存储大量数据，每个域Chrome，Firefox和Opera是5M，IE是10M。
+数量：cookie在浏览器中能存的数量比较少，一个cookie最多可以存放4096B左右的数据。相比用Web Storage更适合存储大量数据，每个域Chrome，Firefox和Opera是5M，IE是10M。
 请求头：每次请求时，cookie都会存放在请求头中，但是Web Storage不会。
 API接口：cookie类似文本字符串，Web Storage更符合JS的语法和面向对象的规则。
 

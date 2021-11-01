@@ -10,17 +10,17 @@
 
 <body>
     <script>
-        var url = 'http://learning-api.mafengshe.com/news?pageSize=10&page=2'
+        var url = 'http://learning-api.mafengshe.com/news?pagesize=10&page=2'
         const ajaxGet = function (url) {
-            const promise = new Promise((resolved, rejected) => {
+            const promise = new Promise((resolve, rejecte) => {
                 let xhr = new XMLHttpRequest()
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4) {
                         if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
-                            resolved(JSON.parse(xhr.responseText))
+                            resolve(JSON.parse(xhr.responseText))
                         } else {
-                            rejected(xhr.statusText)
+                            rejecte(xhr.statusText)
                         }
                     }
                 }
@@ -30,13 +30,50 @@
             return promise;
         }
 
-        ajaxGet(url)
-            .then((data) => {
-                console.log(data)
-            })
-            .catch((reason) => {
-                console.log(reason) 
-            })
+
+        // 封装测试
+        // ajaxGet(url)
+        //     .then((data) => {
+        //         console.log(data)
+        //     })
+        //     .catch((reason) => {
+        //         console.log(reason)
+        //     })
+
+        // 串行调用n次ajaxGet,
+        // function serialAjaxGet(n, dataHandler) {
+        //     let p = new Promise((resolve) => {
+        //         resolve()
+        //     })
+
+        //     for (let i = 1; i <= n; i++) {
+        //         p = p.then((data) => {
+        //             if (data)
+        //                 dataHandler(data.result.data.list[0].title)
+        //             return ajaxGet(`http://learning-api.mafengshe.com/news?pageSize=10&page=${i}`)
+        //         })
+        //     }
+
+        //     p.then((data) => { //最后一次要手动加，因为它不再请求了，和前面N-1次的行为不一样，额外设置一下
+        //         dataHandler(data.result.data.list[0].title)
+        //     })
+        // }
+
+        // serialAjaxGet(10, dataHandler);
+
+        // function dataHandler(data) {
+        //     console.log(data)
+        // }
+
+        let arr = []
+        for (let i = 1; i <= 10; i++) {
+            arr.push(ajaxGet(`http://learning-api.mafengshe.com/news?pageSize=10&page=${i}`))
+        }
+
+        let p = Promise.all(arr)
+        p.then((data) => {
+            console.log(data)
+        })
     </script>
 </body>
 
