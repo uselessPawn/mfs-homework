@@ -1,0 +1,209 @@
+问答题
+1. ES6 中的 class 其本质是 es5 声明类的方式的语法糖吗？请从原型链方面证明你的想法
+是。
+打印一个类的实例后，可以看到它__proto__的constructor属性是class 类名 
+
+
+2. ES6 中的类构造函数如何声明？
+在class内使用constructor如
+
+class Person {
+    constructor() {
+
+    }
+}
+
+3. ES6 实现类 private 方法有几种形式？各是什么？
+两种方式。
+方法一、
+在方法名前加下划线。表示该方式是私有方法。
+
+方法二、
+用Symbol类型的数据作为方法名。
+
+
+4. 如何声明类的get，set方法？何时会调用get、set方法？
+
+get、set加方法名进行声明。
+如：
+get data() {
+
+}
+
+set data(newData) {
+
+}
+
+get、set是读\设写成员变量时会调用get、set方法。
+
+
+
+5. 什么是类的静态方法？如何声明？如何调用？
+就是用类名调用的方法。
+
+在class里用static关键字声明。
+如果是ES6之前，如果有类
+function Person(){}
+可以直接设置
+Person.clazz = function(){return "Human."}
+
+用类名调用，
+如Person.clazz()
+
+6. ES6 中如何进行继承？子类的构造函数中如何调用父类的构造函数？
+用extend关键字进行继承。
+使用super方法调用父类的构造函数。
+
+
+7. ES6 的模块中如何导入导出变量？
+使用关键字import/export
+
+导入：
+import {data} from "file1"
+
+导出：
+export let t = 10;
+
+
+
+8. ES6 的模块 export default 和 export 有何异同？
+export default 可以省略导出变量的名字，如：
+export default {
+
+}
+
+但是export必须要写明导出的变量的名字，如：
+export a 
+
+
+
+9. 修饰器（Decorator）是什么？如何使用？
+JavaScript中，装饰器是一种用于修饰类(class)、方法、属性的装饰。
+说简单点就是将一段代码与另一段代码包装在一起的一种方式。
+
+类属性装饰器的一个示例：
+```
+function readonly(target, name, descriptor) {
+  descriptor.writable = false
+
+  return descriptor
+}
+
+class Animal {
+  @readonly age = 2
+}
+
+const cat  = new Animal()  // {age: 2}
+```
+代码题
+
+1. 请写出与下面 ES5 代码等价的 ES6 代码
+```
+function Point(x, y) {
+   this.x = x;
+   this.y = y;
+}
+
+Point.prototype.toString = function () {
+   return '(' + this.x + ', ' + this.y + ')';
+};
+
+var p = new Point(1, 2);
+```
+
+```
+class Point {
+    x;
+    y;
+
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    toString() {
+        return '(' + this.x + ', ' + this.y + ')';
+    }
+}
+
+var p = new Point(1,2)
+
+```
+
+2. 请实现Circle类，其表示平面上的一个圆，构造时需要传入 x,y,r 分别为圆在平面上的坐标 (x,y）和其半径 r，需要支持使用 circle.area 获取圆的面积
+```
+class Circle {
+    constructor(x, y, r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+    }
+
+    set area(newValue) {
+        return
+    }
+
+    get area() {
+        return this.r ** 2 * Math.PI;
+    }
+
+}
+
+let c = new Circle(1, 1, 2)
+console.log(c.area)
+
+```
+
+
+
+
+3. 假定我们的代码中需要4个类，分别是 Animal，Dog，Cat，Human。Animal 有方法 eat,sleep;Dog,Cat有方法bark；Human有方法speak；请使用 ES6 中的继承实现。
+```
+class Animal {
+    constructor() {
+    }
+
+    eat() {
+        console.log("eat")
+    }
+
+    sleep() {
+        console.log("sleep")
+    }
+}
+
+class Human extends Animal {
+    constructor() {
+        super()
+    }
+
+    speak() {
+        console.log("hello world.")
+    }
+}
+
+class Cat extends Animal {
+    constructor() {
+        super()
+    }
+
+    bark() {
+        console.log("喵.")
+    }
+}
+
+class Dog extends Animal {
+    constructor() {
+        super()
+    }
+
+    bark() {
+        console.log("汪.")
+    }
+}
+
+
+
+```
+
+

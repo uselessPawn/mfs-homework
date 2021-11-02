@@ -19,24 +19,27 @@
     <script>
         let startBt = document.getElementById("start")
         let stopBt = document.getElementById("stop")
+        let award = document.getElementById("award")
+        award.setAttribute("data-timerId", "null")
 
         startBt.addEventListener("click", startHandle)
         stopBt.addEventListener("click", stopHandle)
 
         function startHandle() {
-            let award = document.getElementById("award")
-
+            if (award.getAttribute("data-timerId") !== "null")
+                return;
             let timerId = setInterval(() => {
                 award.innerHTML = randomAward();
             }, 100)
 
-            award.setAttribute("data-timerId",timerId)
+            award.setAttribute("data-timerId", timerId)
         }
 
-        function stopHandle() {
-            let award = document.getElementById("award")
+        function stopHandle() { 
             let timerId = award.getAttribute("data-timerId")
+            if (timerId === "null") return;
             clearInterval(timerId)
+            award.setAttribute("data-timerId", "null")
             award.innerHTML = randomAward();
         }
 
