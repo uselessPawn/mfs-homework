@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        新闻标题是
+    </div>
+    <div id="title">
+
+    </div>
+    <script>
+        var xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                    let title = document.getElementById("title")
+                    title.innerHTML = JSON.parse(xhr.response).result.data.list[0].title
+                }
+            }
+        }
+        xhr.open("get", "http://learning-api.mafengshe.com/news?pagesize=1&page=1")
+        xhr.send()
+    </script>
+
+
+</body>
+
+</html>

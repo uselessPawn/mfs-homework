@@ -14,10 +14,9 @@ setInterval(function(){
   for(var i=0;i<1000*1000*1000;i++);//假设这行代码运行需要100ms
 },1000)
 ```
+
 还是1S左右。
-
-第一次1S，第二次开始是
-
+因为定时器的机制是浏览器等约定时间到了会将回调函数放入事件循环，而在两个约定时间点之间代码有没有被执行，有没有被执行完，浏览器不关心。
 
 3. 如下代码的输出是什么？为什么？
 
@@ -31,7 +30,7 @@ console.log(2);
 2
 1
 
-
+因为 console.log(2) 是正在执行的消息，而定时器的则是刚刚被加入消息队列的事件。
 
 4. 如下代码执行结果是什么？请解释原因
 var t = true;
@@ -42,7 +41,8 @@ window.setTimeout(function (){
 while (t){}
 alert('end');
 
-
+代码直接被卡死。永远不会出现 ‘end’ 的提示框。
+因为等于消息队列中正在执行一个永远无法完成的事件。后进入消息队列的定时器的回调函数自然没机会执行。
 
 5. 我们会在很多代码里看到如下语句，请说明在什么场景下需要使用如下形式代码
 setTimeout(function(){
@@ -56,5 +56,16 @@ setTimeout(function(){
 代码题
 1. 请用 setTimeout 模拟实现 setInterval，并说明你实现的函数和系统自带的 setInterval 有什么不同
 
+```
+function mySetInterval(fun,millisec){
+    setTimeout(function(){
+        fun();
+        mySetInterval(fun,millisec)
+    },millisec);
+}
+```
 
-
+不同：
+一次事件处理函数执行结束到下次时间处理函数开始执行的间隔更接近期望的时间。
+id会不断改变，不利于取消。
+事件处理函数内用时过长会影响下一次定时器触发时间。

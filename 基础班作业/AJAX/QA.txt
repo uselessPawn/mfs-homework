@@ -4,7 +4,6 @@ Asynchronous JavaScript and XML的简称。
 
 普通的HTTP请求是同步顺序执行的，AJAX则是在浏览器和服务器之间使用异步数据传输从服务器获取数据。
 
-
 2. 传统网页的渲染模式和基于 AJAX 的网页渲染模式有何不同？
 
 传统网页每次更新页面都需要刷新整个页面显示最新数据。
@@ -13,7 +12,7 @@ AJAX则能够脱离当前浏览器页面的请求、加载等独立执行。这�
 
 
 3. 如何模拟调试 AJAX 的数据
-
+可以用 nodejs 的 express 框架搭建简易服务器。
 
 
 4. 如何兼容老浏览器创建 XMLHttpRequest 对象？
@@ -22,16 +21,55 @@ AJAX则能够脱离当前浏览器页面的请求、加载等独立执行。这�
 
 
 5. XMLHttpRequest 对象有哪几个常用方法？分别对应的含义如何？
+常用方法:
+
+XMLHttpRequest.open() 方法初始化一个HTTP请求
+有三个参数
+method：要使用的HTTP方法
+url：一个DOMString表示要向其发送请求的URL。
+asnyc： 一个可选的布尔参数，表示是否异步执行操作，默认为true。 
+user：可选的用户名用于认证用途；默认为null。
+password：可选的密码用于认证用途，默认为null。
+
+
+XMLHttpRequest.send() 方法用于发送 HTTP 请求。
+body 可选，在XHR请求中要发送的数据体.
+
+XMLHttpRequest.setRequestHeader() 是设置HTTP请求头部的方法。
+此方法必须在  open() 方法和 send()   之间调用。
+header 属性的名称。
+value 属性的值。
 
 
 
 6. 常见的 HTTP 请求头有哪些？如何使用 AJAX 设置 HTTP 请求头？
+常见的请求头有：
+Accept：浏览器能够处理的内容类型
+Accept-Charset：浏览器能够处理的字符集
+Accept-Encoding：浏览器能够处理的压缩编码
+Accept-Language：浏览器当前设置的语言
+Connection：浏览器与服务器的连接类型
+Cookie：当前页面的cookie
+
+Referer:发送请求的页面的URI
+
+XMLHttpRequest.setRequestHeader()方法设置请求头。
+
+
 
 
 7. 如何使用 AJAX 发起 POST 请求？
 
-
-
+```
+    var xhr = createXHR();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log('data: ' + xhr.responseText);
+        }
+    }
+    xhr.open('post', url, true);
+    xhr.send();
+```
 
 
 

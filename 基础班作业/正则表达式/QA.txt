@@ -39,12 +39,12 @@ $   ————匹配字符串的结束（零宽断言）
 浮点数
 
 
-整数         
-非负浮点数    
-正浮点数    ^[1-9]\d*\.\d+$|^0\.\d+$
-非正浮点数  
-负浮点数    ^-[1-9]\d*\.\d+$|^0\.\d+$
-浮点数      ^-?[1-9]\d*\.\d+$|^0\.\d+$
+整数       ^(0|[1-9][0-9]*|-[1-9][0-9]*)$ 
+非负浮点数  ^0\.0+$|^0\.\d+|^[1-9]\d*\.\d+$
+正浮点数    ^0\.\d+|^[1-9]\d*\.\d+$
+非正浮点数  ^0\.0+$|^-0\.\d+$|^-[1-9]\d*\.\d+$
+负浮点数    ^-0\.\d+$|^-[1-9]\d*\.\d+$
+浮点数      ^0\.0+$|^0\.\d+|^[1-9]\d*\.\d+$|^-0\.\d+$|^-[1-9]\d*\.\d+$
 
 2. 请写出可以检查用户名的正则表达式，要求如下
 
@@ -52,9 +52,13 @@ $   ————匹配字符串的结束（零宽断言）
 以字母开头
 可以包含数字、下划线
 
+^[a-zA-z]\w{7,15}$
+
 3. 请写出可以匹配所有合法电子邮箱的正则表达式
+^\w+([-+._]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$
 
 4. 请写出可以检查是否是合法网址的url(可以是http协议或者https协议)
+https?://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$
 
 5. 请完成checkPassword(str)这个函数，这个函数可以检查用户输入的密码是否合法，以下是密码要求
 
@@ -63,6 +67,20 @@ $   ————匹配字符串的结束（零宽断言）
 应该包括小写字母，大写字母，数字，下划线中的至少3个
 不能包括其他特殊字符
 
+```
+        function checkPassword(str) {
+            let count = 0;
+            if (/[a-z]/.test(str)) count++;
+            if (/[A-Z]/.test(str)) count++;
+            if (/[0-9]/.test(str)) count++;
+            if (/[_]/.test(str)) count++;
+
+            if (count < 3)
+                return false;
+
+            return /^[a-zA-Z_]\w{5,15}$/.test(str) ? true : false;
+        }
+```
 6. 请使用正则表达式实现jQuery中的addClass和removeClass。
 这里做简化，只需要实现add/removeClass(str,clazz)，其返回值为可以作为元素的class属性的string。
 下面给出两个例子
@@ -71,6 +89,31 @@ $   ————匹配字符串的结束（零宽断言）
 addClass("nav container-wrapper","fixed") // return "nav container-wrapper fixed"
 removeClass("nav container-wrapper","container-wrapper") // return "nav"
 ```
+      function addClass(str, clazz) {
+            if (!clazz || !str)
+                return;
+            if (new RegExp(' ' + clazz).test(' ' + str)) {
+                return str;
+            } else {
+                return str + " " + clazz
+            }
+        }
+
+
+        function removeClass(str, clazz) {
+            if (!clazz || !str)
+                return;
+            if (new RegExp(' ' + clazz).test(' ' + str)) {
+                str = " " + str;
+                console.log(1)
+                str = str.replace(" " + clazz, "")
+                str = str.substr(1)
+            } else {
+                console.log(1)
+            }
+            return str;
+        }
+
 
 7. 已知获取了部分html（截取自码蜂社官网，为minify以后的代码），完成函数getInfo(html)。
 输入HTML:

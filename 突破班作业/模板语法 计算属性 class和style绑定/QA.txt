@@ -1,0 +1,114 @@
+问答题
+1. 什么是模板？它和真实的DOM有什么关系？
+Vue.js 使用了基于 HTML 的模板语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。
+所有 Vue.js 的模板都是合法的 HTML，所以能被遵循规范的浏览器和 HTML 解析器解析。
+
+
+2. 如何使用插值语法绑定变量到文本？
+用两个花括号,中间加变量，如
+{{date}}
+
+3. 如何绑定属性？（请写出缩写和非缩写形式）
+缩写:
+:
+
+非缩写:
+v-bind
+
+
+
+4. 如何绑定事件？（请写出缩写和非缩写形式）
+缩写：
+@click
+非缩写
+v-on:click
+
+
+5. v-if v-for 各有什么用？
+v-if 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。
+
+我们可以用 v-for 指令基于一个数组来渲染一个列表。
+v-for 指令需要使用 item in items 形式的特殊语法，其中 items 是源数据数组，而 item 则是被迭代的数组元素的别名。
+
+6. 什么是过滤器（filter），如何声明？如何使用？
+过滤器能在插值或者属性进行进一步加工。
+
+声明方式：
+
+可以在一个组件的选项中定义本地的过滤器：
+filters: {
+  capitalize: function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+}
+
+也可以在创建 Vue 实例之前全局定义过滤器：
+Vue.filter('capitalize', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
+new Vue({
+  // ...
+})
+
+
+
+使用方式：
+<!-- 在双花括号中 -->
+{{ message | capitalize }}
+
+<!-- 在 `v-bind` 中 -->
+<div v-bind:id="rawId | formatId"></div>
+
+
+
+
+7. 什么是计算属性？如何声明？如何使用？
+当插值中出现了过多的逻辑运算时，可以使用计算属性，它在data不做改变时，值会被缓存下来，这样就大大减小了模板的负担。
+
+
+声明方式：
+在Vue的选项里添加computed
+ computed: {
+    // 计算属性的 getter
+    reversedMessage: function () {
+      // `this` 指向 vm 实例
+      return this.message.split('').reverse().join('')
+    }
+  }
+
+使用方式：
+和插值一样，不需要加括号
+<p>Computed reversed message: "{{ reversedMessage }}"</p>
+
+
+8. 如何绑定 class和style 属性？绑定的对象为Array时如何解析？绑定对象为object时如何解析？
+v-bind:class 绑定 class
+绑定为对象时就对象的键名就是类名，值是是否生效
+如果是数组，数组值就是键名就是描述，值是类名
+
+v-bind:style 绑定 style 属性
+对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象
+数组语法可以将多个样式对象应用到同一个元素上
+
+
+代码题
+
+1. 请使用属性绑定实现一个 <img>的src属性每隔1s自动变换，以实现图片自动切换。
+
+
+2. 请自行查阅文档实现：当用户提交表单时，防止页面刷新，并在组件内部使用ajax方式提交表单。
+
+
+3. 请实现 filter uppercase 实现将输入字符串转化为大写形式,并在模板中使用这个 filter
+
+
+4. 假设 Component 中有 data:{firstName: 'Foo', lastName: 'Bar'}，请实现模板中 <div>{{fullname}}</div> 的 fullname 会当 firstName，lastName 任意一个改变时而改变
+
+
+5. 假设 Component 中有 data:{isActive: true}，请实现模板中某个 div class active根据 isActive 变化而变化。
+
