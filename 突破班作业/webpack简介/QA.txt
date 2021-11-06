@@ -1,0 +1,129 @@
+问答题
+1. 什么是 Webpack ，它能完成哪些功能？
+本质上，webpack 是一个用于现代 JavaScript 应用程序的 静态模块打包工具。
+当 webpack 处理应用程序时，它会在内部从一个或多个入口点构建一个 依赖图(dependency graph)，
+然后将你项目中所需的每一个模块组合成一个或多个 bundles，它们均为静态资源，用于展示你的内容。
+
+
+2. Webpack 有哪 4 个核心概念？这些概念的意义是什么？有何作用？
+四个核心概念：
+entry：
+入口起点(entry point) 指示 webpack 应该使用哪个模块，来作为构建其内部 依赖图(dependency graph) 的开始。
+进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。
+
+output：
+output 属性告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件。
+主要输出文件的默认值是 ./dist/main.js，其他生成文件默认放置在 ./dist 文件夹中。
+
+loader：
+webpack 只能理解 JavaScript 和 JSON 文件，这是 webpack 开箱可用的自带能力。
+loader 让 webpack 能够去处理其他类型的文件，并将它们转换为有效的模块，以供应用程序使用，以及被添加到依赖图中。
+
+
+plugin：
+loader 用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。包括：打包优化，资源管理，注入环境变量。
+
+
+3. 请列举 5 个 Webpack 常用 loader，并简述他们的作用
+
+babel-loader：
+将es6转es5
+
+file-loader or url-loader： 
+一般图片打包使用的是url-loader。她有一个好处就是可以设置当打包图片小于某个值时，选择把他打包成base64或者图片
+
+html-withimg-loader：
+打包html文件中的图片
+
+style-loader
+将style引入到页面。
+
+css-loader
+将css语法的样式处理成浏览器能理解的形式；
+
+4. 请列举 5 个 Webpack 常用 plugin，并简述他们的作用
+
+UglifyJsPlugin：
+压缩和混淆代码
+
+CommonsChunkPlugin：
+提高打包效率，将第三方库和业务代码分开打包。
+
+html-webpack-plugin
+可以根据模板自动生成html代码，并自动引用css和js文件
+
+extract-text-webpack-plugin
+将js文件中引用的样式单独抽离成css文件，防止将样式打包在js中引起页面样式加载错乱的现象
+
+HotModuleReplacementPlugin
+热更新
+
+
+
+5. 如何实现 script 标签自动注入？
+使用 html-webpack-plugin 插件，让它自动引用css和js文件
+
+
+6. Webpack 中如何 require 资源文件（图片，字体）？为什么可以 require ，其原理是什么？
+var filename = require("filepath")
+
+先安装对应的资源 loader，在 module 里使用之后，就能用在 require 的时候，由 webpack 根据 loader 进行解析。
+
+因为 webpack 会用 loader 将资源文件全部转化成有效的模块，从而可以 require。
+
+
+
+7. 如何安装 loader？
+用 npm 指令， 如安装 ts-loader 可以需要以下指令。
+npm install --save-dev css-loader ts-loader
+
+8. Webpack 支持链式 loader 吗？如何配置？
+支持链式 loader，只要将 use 的属性设置为一个存放 loader 的数组即可。但要注意解析顺序是从下到上。
+例子如下：
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          // [style-loader](/loaders/style-loader)
+          { loader: 'style-loader' },
+          // [css-loader](/loaders/css-loader)
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          // [sass-loader](/loaders/sass-loader)
+          { loader: 'sass-loader' }
+        ]
+      }
+    ]
+  }
+};
+```
+
+
+9. Webpack require 如何导入 node_modules 中的模块？如何导入自己写的模块？二者有何不同？
+
+在文件名前加 ./ 就是导入自己写的模块， 不加就是导入 node_modules 中的模块。
+
+
+10. 什么是 source-map？为什么一般使用打包工具都需要 source-map?
+
+当JS异常出现时，通常需要知道错误发生在哪里。但当文件有多个输出的时候，追踪异常可能比较困难，source-map 解决了这一问题。
+
+11. 【选做】如何实现 Webpack 打包多页面应用？hint:多入口，多出口，多个注入 plugin
+
+代码题
+
+1. 请手动配置一个webpack.conf.js文件，实现如下功能
+
+script 标签自动注入
+可以 require .txt 和 .stylus 文件
+文件修改后自动刷新页面
+导入 axios 包，实现 ajax 请求
+
+

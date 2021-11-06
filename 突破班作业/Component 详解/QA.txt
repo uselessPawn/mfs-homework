@@ -10,19 +10,34 @@
 
 
 3. 如何声明 prop ？如何对 prop 进行验证？
-Prop 是你可以在组件上注册的一些自定义 attribute。
+Prop 是可以在组件上注册的一些自定义 attribute。
 在声明组件的时候声明props选项。
 
+为了定制 prop 的验证方式，可以为 props 中的值提供一个带有验证需求的对象，而不是一个字符串数组。
 
 4. 如何自定义事件？父组件如何绑定子组件事件？
 可以使用$emit 方法自定义事件。
 
+在父组件希望触发的标签上写 v-on:"自定义事件名"="'事件函数名或事件函数体'"
 
 5. 什么是 slot？如何使用？
+slot 能被用于向一个组件传递内容
+在组件内想要接受地方写上<slot></slot>就行
 
 
 6. 如何异步加载组件？
-
+在声明组件时，第二个参数输入一个函数，结构类似Promise的构造函数，其自带两个参数，分别为 resolve 和 rejected。
+例子如下：
+```
+Vue.component('async-example', function (resolve, reject) {
+  setTimeout(function () {
+    // 向 `resolve` 回调传递组件定义
+    resolve({
+      template: '<div>I am async!</div>'
+    })
+  }, 1000)
+})
+```
 
 代码题
 

@@ -1,0 +1,105 @@
+问答题
+1. Vue 是通过什么方式检测 data 变化？
+
+通过 setter 特性对 data 进行监测，一旦其发生改变就触发 notify 函数,告知 watcher 里面的引用也发生改变。
+
+
+2. 以下过渡类名各是在什么时候添加的？
+v-enter            
+定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
+
+v-enter-active     
+定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。
+
+v-enter-to
+2.1.8 版及以上定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。
+
+v-leave
+定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。
+
+v-leave-active
+定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。
+
+v-leave-to
+2.1.8 版及以上定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。
+
+
+
+3. render 函数有什么用？Vue 是如何编译 template ？
+字符串模板的代替方案，允许你发挥 JavaScript 最大的编程能力，即用 JS 代码来生成虚拟 DOM 树
+
+template 的编译可以分成 parse、optimize 与 generate 三个阶段，最终需要得到 render function。
+parse，parse 会用正则等方式将 template 模板中进行字符串解析，得到指令、class、style等数据，形成 AST
+optimize 主要作用就跟它的名字一样，用作「优化」。
+generate 会将 AST 转化成 render funtion 字符串，最终得到 render 的字符串以及 staticRenderFns 字符串。
+
+
+4. 指令(directive)是如何声明？如何使用？
+
+
+5. 如下代码会打印什么？
+
+var mixin = {
+   created: function () {
+      console.log('混合对象的钩子被调用')
+   }
+}
+new Vue({
+   mixins: [mixin],
+   created: function () {
+      console.log('组件钩子被调用')
+   }
+})
+
+会打印：
+混合对象的钩子被调用
+组件钩子被调用
+
+
+
+代码题
+1. 请实现全局混合，当组件创建(created)的时候打印 created
+
+var mixin = {
+   created: function () {
+      console.log('created')
+   }
+}
+
+new Vue({
+    \\···
+   mixins: [mixin],
+})
+
+2. 请手动将如下 template 转化为与之等价的 render 函数
+
+<div>
+   <h1>I'm a template!</h1>
+   <p v-if="message">
+      {{ message }}
+   </p>
+   <p v-else>
+      No message.
+   </p>
+</div>
+
+
+render: function(createElement) {
+    if(this.message) {
+        createElement('div',
+        {},
+        [
+            createElement('h1',{},'I'm a template!'),
+            createElement('p',{},this.message)
+        ]) 
+    } else {
+        createElement('div',
+        {},
+        [
+            createElement('h1',{},'I'm a template!'),
+            createElement('p',{},'No message')
+        ]) 
+    }
+} 
+
+3. 请完成如下渐变效果
