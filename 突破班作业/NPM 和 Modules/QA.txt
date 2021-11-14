@@ -1,0 +1,55 @@
+1. 如何新建一个npm项目，本质是创建了什么文件？
+本质上是创建了 package.json 文件。
+
+2. 如何安装删除npm包？全局安装和局部安装有什么区别？
+npm uninstall <package-name>
+
+区别：
+在js实例代码中，默认下node.js会在NODE_PATH和目前js所在项目下的node_modules文件夹下去寻找模块，
+因此，如果只是全局安装，不能直接通过require()的方式去引用模块，需要手动解决包路径的配置问题
+
+.对于包的更新不好管理，可能你需要为每个包重新命名，如gulp@3.8.1、gulp@3.9.1...，为了区别不同项目使用指定的包，
+保证模块之间的相互依赖（这块下面会介绍），区别每个项目正常运行。
+
+全局安装后可以供命令行(command line)使用，用户可以在命令行中直接运行该组件包支持的命令。
+
+
+3. 如何自定义 npm 命令（scripts）？
+在 package.json 文件中的 scripts 属性中设置相应的自定义命令和对应的命令。
+
+
+4. Node.js中require('./xxxx')和require('xxxx')导入的包相同吗？
+不同。
+require('./xxxx') 导入的是当前文件夹下的文件
+require('xxxx') 导入的是插件中的安装的模块
+
+
+5. Node.js中是如何处理循环引用？
+nodejs中的模块互相引用形成的“闭环”是用“断点”这一方式打开的，
+以断点为出口去执行其他模块，也以断点为入口进行返回，之后继续执行断点之后的代码。
+
+6. Node.js 模块如何如何导出变量/函数/对象？
+
+可以使用module.exports导出对象，如下所示：
+```
+module.exports = obj
+```
+
+或者使用
+
+exports.[function name] = [function name] 的方式导出
+
+
+7. module.exports 和 exports 的使用有何区别？(饿了么面试题)
+前者公开了它指向的对象。 后者公开了它指向的对象的属性。
+
+exports = module.exports = {}
+所以module.exports和exports的区别就是var a={}; var b=a;，a和b的区别
+即exports 是 module.exports 的一个引用。
+
+
+8. Node.js 模块中可以定义全局变量（其他模块可以直接引用访问）吗？如果能，应该如何定义？如果不能，请说明原因。（饿了么面试题改编
+
+不能。
+Node.js 里面的 js 文件代码会被封装到一个函数中，因而文件与文件之间的执行上下文是彼此隔离的。
+

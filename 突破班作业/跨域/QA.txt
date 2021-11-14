@@ -1,0 +1,77 @@
+问答题：
+1. 了解什么是域
+假设当前显示页面地址为 http://bbs.mafengshe.com/a/b.html
+
+http://bbs.mafengshe.com/a/b/c.html
+http://bbs.mafengshe.com/a.html
+http://bbs.mafengshe.com/pic.png
+https://bbs.mafengshe.com/a/b.html
+http://bbs.mafengshe.com:81/a/b.html
+http://work.mafengshe.com/a/b.html
+http://mafengshe.com/a/b/c.html
+file:///a/b.html
+是什么原因造成直接跨域访问失败？
+
+
+http://bbs.mafengshe.com/a/b/c.html  ————不跨域
+http://bbs.mafengshe.com/a.html  ————不跨域
+http://bbs.mafengshe.com/pic.png  ————不跨域
+https://bbs.mafengshe.com/a/b.html  ————跨域，协议不同
+http://bbs.mafengshe.com:81/a/b.html  ————跨域，端口不一样
+http://work.mafengshe.com/a/b.html  ————跨域，域名不同
+http://mafengshe.com/a/b/c.html  ————跨域，域名不同
+file:///a/b.html                 ————跨域，协议不同
+
+
+2. 跨域有哪几种方法？他们的原理各是什么？各有什么局限性？（如果有的话）
+需要回答四种跨域方法
+方法一：使用document.domain更改源（降域）
+原理：原理：相同主域名不同子域名下的页面，可以设置document.domain让它们同域
+局限：不能从一个跨域到另一个域名，只能到自己的父域名。而且同域document提供的是页面间的互操作，需要载入iframe页面
+
+
+方法二：使用document.name 存储信息
+原理：window对象有个name属性，该属性有个特征：
+即在一个窗口(window)的生命周期内,窗口载入的所有的页面（甚至不同域名）都是共享一个window.name的，
+每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的，
+所以我们可以通过window.name在不同iframe间传递信息，name可以存储2MB的信息。
+
+局限：只能存储2MB的消息，而且操作很不方便。
+
+
+方法三：通过JSONP实现跨域
+原理：通过动态创建 script 标签，通过 script 标签的 src 请求没有域限制来获取资源。
+
+局限：
+只支持GET请求而不支持POST等其它类型的HTTP请求
+它只支持跨域HTTP请求这种情况，不能解决不同域的两个页面之间如何进行JavaScript调用的问题
+安全性不能保证
+调用失败的时候无法返回错误码
+
+
+方法四：跨域资源共享（CORS）
+CORS背后的思想，就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是成功还是失败
+
+CORS跨域的实现需要前浏览器端和服务器端共同支持。
+服务器通过设置Access-Control-Allow-Origin的值为可被允许的源或者*,当浏览器获取到该头字段信息，就会允许AJax跨域访问了。
+实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。
+
+3. 本地如何模拟跨域访问？
+请演示并截图
+一\用npm安装express
+然后用用express -e 命令构建项目，npm install安装所有依赖包
+在view文件里编写.ejs模板文件
+再用npm start启动服务器
+
+
+代码题：
+1. 请使用 降域 实现 iframe 跨域
+第一步：在hosts文件中设置一个想要访问的域名和子域名
+第二步：在父html文件和iframe文件设置document.domain为想要的父域名
+第三步：设置ifram的src
+
+
+
+2. 请实现 JSONP 跨域，后端可采用静态服务器
+
+

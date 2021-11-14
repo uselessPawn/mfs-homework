@@ -1,0 +1,126 @@
+问答题
+1. Node.js 中什么是事件？如何定义事件？如何触发事件？
+Node.js 中的事件指的是 events 模块。
+
+可以通过继承 evnets 中的 EventEmitter 来自定义事件。
+```
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {}
+```
+
+eventEmitter.on() 方法用于注册监听器，eventEmitter.emit() 方法用于触发事件。
+
+
+
+2. Node.js 中如何读写文件？请分别给出示例代码
+
+
+
+3. 流是什么？如何使用流读取文件？
+流是个抽象的概念。可以理解成是利用面对对象编程抽象的思想，对输入输出设备的描述。
+
+流具有方向性，至于是输入流还是输出流则是一个相对的概念，一般以程序为参考，如果数据的流向是程序至设备，我们成为输出流，反之我们称为输入流。
+
+fs.readStream
+
+
+4. Node.js 中如何获取环境变量？
+只要访问全局对象 process 的 env 就行了。
+
+如
+```
+process.env.NODE_ENV
+```
+
+
+代码题
+1. 请自行查阅资料学习fs.ReadStream，并使用它读取任意文件并将其中内容打印
+```
+let fs = require("fs");
+
+
+let rs = fs.createReadStream('./text.txt', { highWaterMark: 1 })
+
+let arr = [];
+rs.on('data', function (chunk) {  //chunk是buffer类型
+    arr.push(chunk);
+})
+
+rs.on('end', function (chunk) {
+    console.log(Buffer.concat(arr).toString());
+})
+
+// 监听错误
+rs.on('error', function (err) {
+    console.log(err);
+})
+```
+
+2. 请使用 http server 配合流处理，完成form表单的文件上传功能（浏览器提交的文件需要保存到服务器端自己定义的目录下）
+```
+const http = require('http');
+const fs = require('fs')
+
+const server = http.createServer((req, res) => {
+
+    req.on('data', function (chunk) {
+        chunk = chunk.toString().split('\r\n')  //
+        let data = chunk[4]
+
+        ws = fs.createWriteStream('./uploadFile/text.txt')
+        ws.write(data, 'UTF8')
+    })
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html')
+    res.end('hello')
+})
+
+server.listen(8000, "localhost");
+```
+
+3. Node.js 中 http 模块既有 server 端，又有 client 端，请实现一个简单的server：对于任何请求返回hello。
+而后使用 client 端请求你自己的server，并打印出结果
+
+server
+```
+const http = require('http')
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html')
+    res.end('hello')
+})
+
+server.listen(8000, "localhost")
+console.log('listen...')
+
+```
+
+
+client 
+```
+var http = require('http');
+
+var options = {
+    protocol: 'http:',
+    hostname: 'localhost',
+    port: '8000',
+    path: '/',
+    method: 'GET'
+};
+
+var client = http.request(options, function (res) {
+    var data = '';
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+        data += chunk;
+    });
+    res.on('end', function () {
+        console.log(data);
+    });
+});
+
+client.end();
+```

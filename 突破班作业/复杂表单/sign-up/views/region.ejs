@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= title %></title>
+</head>
+
+<body>
+    <form action="">
+
+        <div>
+            <select name="province" id="province" onchange="provinceInput()">
+                <option value="">省</option>
+            </select>
+        </div>
+
+        <div>
+            <select name="city" id="city" onchange="cityInput()">
+                <option value="">市</option>
+            </select>
+        </div>
+        <div>
+            <select name="county" id="county">
+                <option value="">区/县</option>
+            </select>
+        </div>
+    </form>
+
+    <script>
+        var provinceSl = document.getElementById("province");
+        var citySl = document.getElementById("city");
+        var countySl = document.getElementById("county");
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', '/region/province')
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                    let province = JSON.parse(xhr.response);
+                    let l = province.length;
+                    for (let i = 0; i < l; i++) {
+                        let option = document.createElement("option")
+                        option.innerHTML = province[i];
+                        provinceSl.appendChild(option)
+
+                    }
+                }
+            }
+        }
+        xhr.send()
+
+        function provinceInput() {
+            // 除了city第一个子节点，后面全删
+            let optionChild = Array.from(citySl.childNodes).filter(cur => cur.nodeType === 1)
+
+            if (optionChild.length > 1) {
+                for (let i = 1, l = optionChild.length; i < l; i++) {
+                    citySl.removeChild(optionChild[i])
+                }
+            }
+
+            var xhr = new XMLHttpRequest()
+            xhr.open('get', `./region/city?province=${provinceSl.value}`)
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                        let city = JSON.parse(xhr.response)
+                        let l = city.length;
+                        for (let i = 0; i < l; i++) {
+                            let option = document.createElement("option");
+                            option.innerHTML = city[i];
+                            citySl.appendChild(option)
+                        }
+
+                    }
+                }
+            }
+            xhr.send()
+        }
+
+        function cityInput() {
+            // 除了city第一个子节点，后面全删
+            let optionChild = Array.from(countySl.childNodes).filter(cur => cur.nodeType === 1)
+
+            if (optionChild.length > 1) {
+                for (let i = 1, l = optionChild.length; i < l; i++) {
+                    countySl.removeChild(optionChild[i])
+                }
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', `./region/county?province=${provinceSl.value}&city=${citySl.value}`);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                        let county = JSON.parse(xhr.response)
+                        let l = county.length;
+                        for (let i = 0; i < l; i++) {
+                            let option = document.createElement("option");
+                            option.innerHTML = county[i];
+                            countySl.appendChild(option)
+                        }
+                    }
+                }
+            }
+            xhr.send();
+        }
+    </script>
+
+</body>
+
+</html>

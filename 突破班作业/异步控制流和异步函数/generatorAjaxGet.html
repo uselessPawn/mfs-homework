@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const pageSize = 10;
+
+        // 串行
+
+        // function* serialGen() {
+        //     let data = []
+        //     for (let i = 1; i <= 10; i++) {
+        //         data.push(yield ajaxGet(`http://learning-api.mafengshe.com/news?pageSize=${pageSize}$page=${i}`))
+        //     }
+        //     console.log(data)
+        // }
+
+        // function run(gen) {
+        //     let itr = gen()
+
+        //     function next(data) {
+        //         let result = itr.next(data)
+        //         if (result.done) return result.value
+        //         result.value.then(next)
+        //     }
+        //     next()
+        // }
+
+        // run(serialGen);
+
+
+        // 并行
+        function* parallelGen() {
+            let promises = []
+            for (let i = 1; i <= 10; i++) {
+                promises.push(ajaxGet(`http://learning-api.mafengshe.com/news?pageSize=${pageSize}$page=${i}`))
+            }
+            promises.push(0)
+            let data = yield promises
+            console.log(data)
+        }
+
+        let itr = parallelGen()
+        let promises = itr.next().value
+        let datas = []
+        for (let i = 0, l = promises.length; i < l - 1; i++) {
+            promises[i].then((data) => {
+                datas.push(data)
+                if (++promises[l - 1] === l - 1) {
+                    itr.next(datas)
+                }
+            })
+        }
+
+
+        function ajaxGet(url) {
+            const promise = new Promise((resolve, rejecte) => {
+                let xhr = new XMLHttpRequest()
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                            resolve(JSON.parse(xhr.responseText))
+                        } else {
+                            rejecte(xhr.statusText)
+                        }
+                    }
+                }
+                xhr.open('get', url);
+                xhr.send();
+            })
+            return promise;
+        }
+    </script>
+</body>
+
+</html>

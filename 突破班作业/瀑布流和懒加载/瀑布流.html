@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>懒加载、瀑布流的新闻</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .newsContainer {}
+
+        .newsItem {
+            width: 300px;
+            padding: 10px;
+            margin: 10px 20px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: lightblue;
+            transition: all 1s;
+        }
+
+        .newsItem img {
+            width: 300px;
+        }
+
+        .newsItem .title {
+            overflow: hidden;
+            margin: 15px 0px;
+        }
+
+        .newsItem .summary {
+            font-size: 14px;
+            color: gray;
+            margin: 15px 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="newsContainer">
+        <!-- <a href=""></a> -->
+        <!-- <div class="newsItem">
+            <img src="">
+            <h2 class="title">title</h2>
+            <div class="summary">content</div>
+        </div> -->
+    </div>
+
+    <script>
+        // 一个是懒加载，一个是瀑布流，这两个技术应该都用到了。
+        // 进来先申请10条新闻，生成节点并挂载到容器里。对于容器里的所有节点都进行瀑布流。
+        // 移动滚轮判断是否到底，决定是否继续申请新闻加到容器里。
+
+        // 有两个主要函数，一个是申请新闻，添加到容器里，一个是将容器里的元素都画对地方。
+
+        // 分两种情况，一种有图片的，一种没图片的。图片只设置宽度，以进行自适应。
+        // 滚动条到底部的条件即为scrollTop + clientHeight == scrollHeight。
+        // 滚轮到底继续申请页，这属于懒加载。
+
+        const pageSize = 5;
+        let page = 1;
+        const newsContainer = document.getElementsByClassName("newsContainer")[0]
+        let model = []
+        getNews()
+
+        window.onresize = () => {
+            fallWater(newsContainer, document.getElementsByClassName('newsItem'))
+        }
+
+        let timerId
+        window.addEventListener("scroll", () => {
+            clearTimeout(timerId)
+            timerId = setTimeout(() => {
+                let max = model.reduce((max, col, index) => {
+                    let height = colHeight(col)
+                    max = colHeight(model[max]) > height ? max : index;
+                    return max;
+                }, 0)
+
+                if (window.pageYOffset + window.innerHeight + 50 >= colHeight(model[max])) {
+                    getNews()
+                    console.log(model)
+                }
+
+            }, 100);    
+        })
+
+
+        //按照 page 取新闻，生成节点，加到容器里，
+        function getNews() {
+            let xhr = new XMLHttpRequest()
+            let url = `http://learning-api.mafengshe.com/news?pageSize=${pageSize}&page=${page++}`
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                        // 将新闻数组封装成需要的形式 {imgUrl,title,summary} 的数组
+                        let newsArr = JSON.parse(xhr.responseText).result.data.list
+
+                        newsArr = newsArr.map((news) => {
+                            return {
+                                imgUrl: news.allPics.total === 0 ? '' : news.allPics.pics[0].originalImg,
+                                title: news.stitle,
+                                summary: news.summary,
+                                url: news.URL,
+                            }
+                        })
+                        console.log(newsArr)
+
+                        // 生成节点挂载到 newsContainer 中
+                        for (let i = 0; i < pageSize; i++) {
+                            let newsItem = document.createElement('div')
+                            newsItem.setAttribute('class', 'newsItem')
+                            newsItem.addEventListener("click", function () {
+                                // console.log(newsArr[i].url)
+                                window.location.href = newsArr[i].url
+                            })
+                            // 加图片
+                            let img = document.createElement('img')
+                            img.setAttribute('src', newsArr[i].imgUrl)
+
+                            newsItem.appendChild(img)
+
+                            // 加标题
+                            let title = document.createElement('h2')
+                            title.setAttribute('class', 'title')
+                            title.innerText = newsArr[i].title
+                            newsItem.appendChild(title)
+
+                            // 加简介
+                            let summary = document.createElement('div')
+                            summary.setAttribute('class', 'summary')
+                            summary.innerText = newsArr[i].summary
+                            newsItem.appendChild(summary)
+
+                            //加到容器里
+                            newsContainer.appendChild(newsItem)
+                        }
+
+                        // 瀑布流
+                        // 因为图片加载完全了才能正确计算高度。暂且加个定时器模拟一下效果。
+                        setTimeout(() => {
+                            fallWater(newsContainer, document.getElementsByClassName('newsItem'))
+                        }, 500);
+
+                    }
+                }
+            }
+            xhr.open('get', url);
+            xhr.send();
+        }
+
+        function fallWater(Container, items) {
+            Container.setAttribute("style", "position: relative;")
+            items = Array.from(items)
+
+            // 计算每列的宽度
+            const colWidth = items[0].offsetWidth
+
+            // 计算左margin
+            const leftMargin = parseInt(window.getComputedStyle(items[0], null).marginLeft.slice(0, -2))
+            const rightMargin = parseInt(window.getComputedStyle(items[0], null).marginRight.slice(0, -2))
+
+            // 计算同列元素的top Margin 和 bottom margin
+            const topMargin = parseInt(window.getComputedStyle(items[0], null).marginTop.slice(0, -2))
+            const bottomMargin = parseInt(window.getComputedStyle(items[0], null).marginBottom.slice(0, -2))
+
+            // 计算可以排的列数
+            const colCount = Math.floor(window.innerWidth / colWidth)
+
+            // 根据列数建立模型, 模型是个二维数组，第一维是列，第二维是元素  
+            model = []
+            for (let i = 0; i < colCount; i++) {
+                model.push([])
+            }
+
+            // 将元素按照贪心算法放入模型,并进行绝对定位
+            items.forEach((newsItem) => {
+                // 找出高度和最小的那一列的 index
+                let min = model.reduce((min, col, index) => {
+                    let height = colHeight(col)
+                    min = colHeight(model[min]) < height ? min : index;
+                    return min;
+                }, 0)
+                // min 是列，
+                newsItem.setAttribute("style", `position:absolute;
+                left:${min*(colWidth+leftMargin+rightMargin)}px;
+                top:${colHeight(model[min])}px;`)
+
+                model[min].push(newsItem)
+            })
+
+            // 输入列，输出列高度（只计算top-maring）
+
+        }
+
+        function colHeight(col) {
+            if (col.length === 0) return 0;
+            return col.reduce((sum, newsItem) => {
+                sum = sum + newsItem.offsetHeight + 3 * 10;
+                return sum
+            }, 0)
+        }
+    </script>
+</body>
+
+</html>

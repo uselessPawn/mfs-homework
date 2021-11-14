@@ -1,0 +1,97 @@
+问答题
+1. Express的Http请求处理模型是什么？
+流水线模型，先通过中间件处理请求，然后分配任务。
+
+2. 如何使用 express-generator 生成 express 项目？请使用它生成项目并对app.js和bin/www两个文件关键代码进行注释详解
+先使用 npm install expresss-generator 安装 express 框架生成器
+然后就可以使用 express <项目名> -e=ejs --save 生成 express 项目。
+
+www 文件的主要功能就是将 express 的实例设置为 http.createServer 的回调函数，并启动调用它的 listen 方法。
+
+设置回调
+```
+var server = http.createServer(app);
+```
+
+启动
+```
+server.listen(port);
+```
+
+其余一些功能就是规范输入输出，以及报错，debug 功能等。
+
+
+app.js 文件的主要功能是对 express 实例的功能增强，以及中间件的引入（类似插件引入）
+
+功能增强
+```
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+```
+
+设置中间件，
+```
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+```
+
+程序保底处理，
+```
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  res.status(err.status || 500);
+  res.render('error');
+});
+```
+
+
+
+3. 请查阅资料完成：什么是 Restful API ？如何使用Restful API访问服务器端资源？
+
+REST(Representational State Transfer)的意思是表征状态转移，它是一种基于HTTP协议的网络应用接口风格，充分利用HTTP的方法实现统一风格接口的服务。
+通过动词（HTTP方法）+名词（请求资源的接口路径）的方式请求资源，赋予接口特定的含义。
+
+只要使用正确的 http 方法 + URL 发出 HTTP 请求就能访问服务器端资源。
+
+4. 如何使用Express写Restful API？
+按照 Restful 规范给 express 实例编写功能即可。
+
+
+5. 如何使用express Router？
+第一步 创建 router 函数
+```
+var router = express.Router();
+```
+
+第二步 编写路由函数，一般做为一个独立文件，导出到主文件
+```
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+module.exports = router;
+```
+
+第三步 将编写的路由函数作为中间件添加到 express 主函数中
+```
+app.use('/', indexRouter);
+```
+
+代码题
+
+1。 请实现 CRUD 用户 的 restful API，用户必须要有 id，用户名，密码，邮箱字段，其他字段可以自行扩展。
+需要实现 GET，POST，PUT,DELETE,PATCH五种访问形式，数据存储在内存中即可

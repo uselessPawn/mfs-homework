@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <form action="/signup" method="post">
+    <div>
+      <label for="username">用户名：</label>
+      <input type="text" id="username" name="username" oninput="usernameChange()" pattern="^[a-zA-Z_]\w{5,17}$"
+        required><span id="usernameHint"></span>
+    </div>
+
+    <div>
+      <label for="password">密码：</label>
+      <input type="password" name="password" id="password" pattern="\w{6,18}" required>
+    </div>
+
+    <div>
+      <label for="">密码重复：</label>
+      <input type="password" name="pswRp" id="psw-rp" oninput="passwordRepeatInput()" required>
+    </div>
+
+    <div>
+      <button type="submit">提交</button>
+    </div>
+
+  </form>
+
+  <form action="">
+    <select name="province" id="province">
+
+    </select>
+    <select name="city" id="city">
+
+    </select>
+    <select name="county" id="county">
+
+    </select>
+  </form>
+
+
+
+  <script>
+    let timeId = 0;
+
+    function usernameChange() {
+      var input = document.getElementById("username")
+      clearTimeout(timeId);
+      timeId = setTimeout(() => {
+        var xhr = new XMLHttpRequest()
+        xhr.open('post', '/usernameExist')
+        xhr.setRequestHeader('content-type', 'application/json')
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+              let hint = document.getElementById("usernameHint")
+              if (JSON.parse(xhr.response).exist) {
+                hint.innerHTML = "用户名已存在";
+              } else {
+                hint.innerHTML = "";
+              }
+            }
+          }
+        }
+        xhr.send(JSON.stringify({
+          username: input.value
+        }))
+      }, 1000)
+    }
+
+
+    function passwordRepeatInput() {
+      let psw = document.getElementById("password");
+      let pswRp = document.getElementById("psw-rp");
+
+      if (psw.value !== pswRp.value) {
+        pswRp.setCustomValidity("两次秘密输入不一致.")
+      } else {
+        pswRp.setCustomValidity("")
+      }
+    }
+  </script>
+
+</body>
+
+</html>

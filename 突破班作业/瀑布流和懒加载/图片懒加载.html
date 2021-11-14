@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .stone {
+            height: 1000px;
+            background-color: lightsalmon;
+        }
+
+        .png-1 {
+            height: 200px;
+            background-color: lightskyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stone">
+        填充物
+    </div>
+    <img class="png-1" data-src="http://static.mafengshe.com/home/pic/2.jpg?imageMogr2/quality/40">
+
+    <div class="stone">
+        填充物
+    </div>
+
+    <script>
+        let nodeList = document.getElementsByTagName('img')
+        LazyImg(nodeList)
+        function LazyImg(nodeList) {
+            Array.from(nodeList).forEach((img) => {
+                window.addEventListener("scroll", () => {
+                    let el = img;
+                    let isShow = el.getBoundingClientRect().top < window.innerHeight && el
+                        .getBoundingClientRect()
+                        .bottom > 0;
+                    console.log(isShow)
+                    if (isShow) {
+                        el.src = el.getAttribute("data-src");
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
