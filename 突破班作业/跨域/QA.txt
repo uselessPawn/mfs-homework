@@ -65,13 +65,56 @@ CORS跨域的实现需要前浏览器端和服务器端共同支持。
 
 
 代码题：
-1. 请使用 降域 实现 iframe 跨域
-第一步：在hosts文件中设置一个想要访问的域名和子域名
-第二步：在父html文件和iframe文件设置document.domain为想要的父域名
-第三步：设置ifram的src
+
+代码实现使用CORS实现跨域用户注册？（后端使用 Express）
+不需要实现数据库操作，注册成功时后端返回
+{errno:0,errmsg:"",data:{}}
+当提交用户名为 mafengshe 时，注册失败返回
+{errno:1,errmsg:"用户名已经存在",data:{}}
+需要在github上提交代码，然后把链接附在答案后面
+
+前端关键代码
+```
+    <form action="http://localhost:3000/userLogup" method="post">
+        <div>
+            <label for="username">账号：</label><input type="text" name="username" id="username">
+        </div>
+
+        <div>
+            <label for="password">密码：</label><input type="text" name="password" id="password">
+        </div>
+
+        <div>
+            <label for="psw-rpt">密码重复：</label><input type="text" name="psw-rpt" id="psw-rpt">
+        </div>
+
+        <div>
+            <button type="submit">提交</button>
+        </div>
+    </form>
+```
+
+后端关键代码
+```
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+router.get('/json', function (req, res, next) {
+  // res.header({ "Access-Control-Allow-Origin": "*" });
+  res.json({ text: "hello" });
+})
 
 
+//模拟数据库 let 
+router.post('/userLogup', function (req, res, next) {
+  if (req.body.username == "mafengshe" ) {
+    res.json({errno:1,errmsg:"用户名已经存在",data:{}})
+  }
+  else {
+    res.json({errno:0,errmsg:"",data:{}});
+  }
+})
 
-2. 请实现 JSONP 跨域，后端可采用静态服务器
-
-
+```

@@ -88,71 +88,78 @@
                     console.log(model)
                 }
 
-            }, 100);    
+            }, 100);
         })
 
 
         //按照 page 取新闻，生成节点，加到容器里，
         function getNews() {
-            let xhr = new XMLHttpRequest()
-            let url = `http://learning-api.mafengshe.com/news?pageSize=${pageSize}&page=${page++}`
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
-                        // 将新闻数组封装成需要的形式 {imgUrl,title,summary} 的数组
-                        let newsArr = JSON.parse(xhr.responseText).result.data.list
+            const promise = new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                let url = `http://learning-api.mafengshe.com/news?pageSize=${pageSize}&page=${page++}`
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                            resolve(JSON.parse(xhr.responseText).result.data.list)
 
-                        newsArr = newsArr.map((news) => {
-                            return {
-                                imgUrl: news.allPics.total === 0 ? '' : news.allPics.pics[0].originalImg,
-                                title: news.stitle,
-                                summary: news.summary,
-                                url: news.URL,
-                            }
-                        })
-                        console.log(newsArr)
-
-                        // 生成节点挂载到 newsContainer 中
-                        for (let i = 0; i < pageSize; i++) {
-                            let newsItem = document.createElement('div')
-                            newsItem.setAttribute('class', 'newsItem')
-                            newsItem.addEventListener("click", function () {
-                                // console.log(newsArr[i].url)
-                                window.location.href = newsArr[i].url
-                            })
-                            // 加图片
-                            let img = document.createElement('img')
-                            img.setAttribute('src', newsArr[i].imgUrl)
-
-                            newsItem.appendChild(img)
-
-                            // 加标题
-                            let title = document.createElement('h2')
-                            title.setAttribute('class', 'title')
-                            title.innerText = newsArr[i].title
-                            newsItem.appendChild(title)
-
-                            // 加简介
-                            let summary = document.createElement('div')
-                            summary.setAttribute('class', 'summary')
-                            summary.innerText = newsArr[i].summary
-                            newsItem.appendChild(summary)
-
-                            //加到容器里
-                            newsContainer.appendChild(newsItem)
                         }
-
-                        // 瀑布流
-                        // 因为图片加载完全了才能正确计算高度。暂且加个定时器模拟一下效果。
-                        setTimeout(() => {
-                            fallWater(newsContainer, document.getElementsByClassName('newsItem'))
-                        }, 500);
-
                     }
                 }
-            }
-            xhr.open('get', url);
-            xhr.send();
+                xhr.open('get', url);
+                xhr.send();
+            }).then((newsArr) => {
+                // 将新闻数组封装成需要的形式 {imgUrl,title,summary} 的数组
+                newsArr = newsArr.map((news) => {
+                    return {
+                        imgUrl: news.allPics.total === 0 ? '' : news.allPics.pics[0]
+                            .originalImg,
+                        title: news.stitle,
+                        summary: news.summary,
+                        url: news.URL,
+                    }
+                })
+                console.log(newsArr)
+
+                // 生成节点挂载到 newsContainer 中
+                for (let i = 0; i < pageSize; i++) {
+                    let newsItem = document.createElement('div')
+                    newsItem.setAttribute('class', 'newsItem')
+                    newsItem.addEventListener("click", function () {
+                        // console.log(newsArr[i].url)
+                        window.location.href = newsArr[i].url
+                    })
+                    // 加图片
+                    let img = document.createElement('img')
+                    img.setAttribute('src', newsArr[i].imgUrl)
+
+                    newsItem.appendChild(img)
+
+                    // 加标题
+                    let title = document.createElement('h2')
+                    title.setAttribute('class', 'title')
+                    title.innerText = newsArr[i].title
+                    newsItem.appendChild(title)
+
+                    // 加简介
+                    let summary = document.createElement('div')
+                    summary.setAttribute('class', 'summary')
+                    summary.innerText = newsArr[i].summary
+                    newsItem.appendChild(summary)
+
+                    //加到容器里
+                    newsContainer.appendChild(newsItem)
+                }
+
+                // 瀑布流
+                // 因为图片加载完全了才能正确计算高度。暂且加个定时器模拟一下效果。
+                setTimeout(() => {
+                    fallWater(newsContainer, document.getElementsByClassName(
+                        'newsItem'))
+                }, 500);
+            })
+
+
+
         }
 
         function fallWater(Container, items) {

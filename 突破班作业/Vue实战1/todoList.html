@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <style>
+        .todoApp {
+            width: 600px;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        .todoInput {
+            width: 600px;
+        }
+
+        ul {
+            padding: 0px;
+            font-size: 20px;
+        }
+
+        li {
+            list-style: none;
+        }
+
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <section class="todoApp">
+
+            <header>todos</header>
+
+            <input class="todoInput" type="text" placeholder="What needs to be done?" v-model="newTodo"
+                v-on:keyup.enter="todoInput">
+            <ul>
+                <li v-for="item in showItems">
+                    <input type="checkbox" v-model="item.completed" >
+                    <span v-bind:class="{completed: item.completed}">{{item.name}}</span>
+                </li>
+            </ul>
+
+            <footer>
+                <span>{{leftCount}} items left</span>
+                <button v-on:click="statu='all'">All</button>
+                <button v-on:click="statu='active'">Active</button>
+                <button v-on:click="statu='completed'">Completed</button>
+                <a v-on:click="clearDone">Clear completed</a>
+            </footer>
+        </section>
+
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                newTodo: '',
+                statu: 'all',
+                items: [{
+                    name: 'a',
+                    completed: false,
+                }, {
+                    name: 'b',
+                    completed: false,
+                }, {
+                    name: 'c',
+                    completed: true,
+                }],
+
+            },
+            methods: {
+                todoInput() {
+                    this.items.push({
+                        name: this.newTodo,
+                        completed: false
+                    })
+                    this.newTodo = ''
+                },
+                clearDone() {
+                    this.items = this.items.filter(item=>item.completed === false)
+                    this.statu = 'all'
+                }
+
+            },
+            computed: {
+                showItems() {
+                    return this.items.filter((item) => {
+                        if (this.statu === 'completed') return item.completed === true
+                        else if (this.statu === 'active') return item.completed === false
+                        return true;
+                    })
+                },
+                leftCount() {
+                    return this.items.reduce((sum, item) => {
+                        sum += item.completed === false ? 1 : 0
+                        return sum
+                    }, 0)
+                },
+
+            }
+        })
+    </script>
+</body>
+
+</html>
